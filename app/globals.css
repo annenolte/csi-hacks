@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+/*
+  Design tokens lifted from design/references/*.png (the Merlin marketing site).
+  The look: warm off-white canvas, near-black ink, one blue accent, pill geometry,
+  hairline borders, very soft shadows, handwritten script for annotations.
+  Light only on purpose — the reference has no dark mode and the wizard reads as paper.
+*/
+
+@theme {
+  --color-ink: #0a0a0a;
+  --color-ink-soft: #3d3d3d;
+  --color-muted: #8c8a87;
+  --color-faint: #b4b2ae;
+
+  --color-canvas: #f4f3f1;
+  --color-paper: #ffffff;
+  --color-cream: #fbf9f6;
+
+  --color-line: #e7e5e1;
+  --color-line-strong: #d6d3ce;
+
+  --color-accent: #3f63e8;
+  --color-accent-soft: #eef1fd;
+  --color-sky: #a8d4f5;
+
+  --color-script-green: #5fcb6e;
+  --color-script-blue: #4a93f7;
+
+  --color-flag: #e0644a;
+
+  --radius-card: 20px;
+  --radius-inner: 14px;
+
+  --font-sans: var(--font-inter), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-script: var(--font-caveat), "Segoe Script", cursive;
+
+  --shadow-lift: 0 1px 2px rgb(10 10 10 / 0.04), 0 8px 24px -12px rgb(10 10 10 / 0.12);
+  --shadow-pop: 0 2px 4px rgb(10 10 10 / 0.06), 0 18px 40px -16px rgb(10 10 10 / 0.22);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Big display type in the reference is tightly tracked and optically tight-leaded. */
+@utility display {
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+
+@utility script {
+  font-family: var(--font-script);
+  font-weight: 600;
+}
+
+/* The pastel mesh that bleeds off the top edge of the reference hero. */
+@utility mesh-top {
+  background-image:
+    radial-gradient(60% 90% at 8% -10%, #dfe6ff 0%, transparent 60%),
+    radial-gradient(50% 80% at 34% -14%, #cfe4ff 0%, transparent 62%),
+    radial-gradient(46% 78% at 62% -12%, #fdf0c4 0%, transparent 60%),
+    radial-gradient(54% 86% at 88% -10%, #ffd9b8 0%, transparent 62%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
