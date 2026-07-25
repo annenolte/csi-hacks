@@ -67,37 +67,82 @@ Gives the business a real, read/write calendar connection — the foundation the
 voice agent will book jobs against later. Skip this and the dashboard shows
 "Not connected" with a working button that just fails to reach Google.
 
-### Create the OAuth client
+> **Note on the console.** Google replaced the single "OAuth consent screen"
+> wizard with a **Google Auth Platform** section split across Branding, Audience,
+> Data Access and Clients. Older walkthroughs (including an earlier version of
+> this file) describe menus that no longer exist. The steps below match the
+> current layout.
 
-1. <https://console.cloud.google.com/> → project dropdown → **New Project**. Name
-   it anything; note the project.
-2. **APIs & Services** → **Library** → search "Google Calendar API" → **Enable**.
-3. **APIs & Services** → **OAuth consent screen**:
-   - User type: **External** (unless you have a Google Workspace org, in which
-     case Internal is simpler and skips the test-user step).
-   - App name, your email for both support and developer contact. Save.
-   - **Scopes** → **Add or remove scopes** → paste
-     `https://www.googleapis.com/auth/calendar` and
-     `https://www.googleapis.com/auth/userinfo.email`. The first is read *and*
-     write on calendars; the second is only so the dashboard can show which Google
-     account is connected.
-   - **Test users** → add your own Google address. While the app is in "Testing",
-     only listed users can connect — if you get `Error 403: access_denied`, this is
-     almost always why.
-4. **APIs & Services** → **Credentials** → **Create credentials** → **OAuth client
-   ID**:
-   - Application type: **Web application**
-   - Authorised redirect URI: `http://localhost:3000/api/calendar/google/callback`
-   - Create, then copy the client ID and client secret.
+### 1. Project and API
 
-The redirect URI has to match **byte for byte** — no trailing slash, right port.
-A mismatch gives `Error 400: redirect_uri_mismatch`.
+1. <https://console.cloud.google.com/> → project dropdown in the top bar →
+   **New Project** → name it anything → **Create**. Check the dropdown is showing
+   your new project before continuing.
+2. **APIs & Services** → **Library** → search `Google Calendar API` → **Enable**.
+   Skipping this lets everything below succeed and then fails at runtime with an
+   "API not enabled" error.
+
+### 2. Google Auth Platform
+
+Left menu → **Google Auth Platform** → **Get started**. Four short steps:
+
+| Step | What to enter |
+| --- | --- |
+| App Information | App name (anything) and your email as user support email |
+| Audience | **External** — or Internal if you have a Google Workspace org, which also lets you skip step 3 below |
+| Contact Information | Your email again |
+| Finish | Tick the User Data Policy box → **Continue** → **Create** |
+
+### 3. Add yourself as a test user
+
+**Google Auth Platform** → **Audience** → **Test users** → **Add users** → your
+own Google address → **Save**.
+
+While the app is in Testing, Google refuses to authorize anyone who isn't on this
+list. `Error 403: access_denied` is almost always this.
+
+### 4. Scopes
+
+**Google Auth Platform** → **Data Access** → **Add or remove scopes**. There is a
+box for pasting scopes manually — paste both:
+
+```
+https://www.googleapis.com/auth/calendar
+https://www.googleapis.com/auth/userinfo.email
+```
+
+**Update** → **Save**.
+
+The first is read *and* write on calendars — the one that matters. The second only
+lets the dashboard show which Google account is connected.
+
+Google flags the calendar scope as **sensitive** and warns about verification.
+That applies to publishing the app publicly; in Testing, with yourself as a test
+user, nothing is blocked.
+
+### 5. Create the client
+
+**Google Auth Platform** → **Clients** → **Create client**.
+
+- Application type: **Web application**
+- **Authorized redirect URIs** → **Add URI**:
+
+```
+http://localhost:3000/api/calendar/google/callback
+```
+
+**Create**, then copy the client ID and secret from the dialog.
+
+The redirect URI must match **byte for byte** — no trailing slash, `http` not
+`https`, port 3000. A mismatch gives `Error 400: redirect_uri_mismatch`.
 
 ```
 GOOGLE_CLIENT_ID=<...>.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=<...>
+GOOGLE_CLIENT_SECRET=GOCSPX-<...>
 GOOGLE_REDIRECT_URI=http://localhost:3000/api/calendar/google/callback
 ```
+
+Restart the dev server afterwards — Next reads env at boot.
 
 ### When you deploy
 
@@ -148,5 +193,8 @@ cascades to everything else) or just sign up with a different email.
 | Signup succeeds, dashboard is empty | Schema not applied — re-run `supabase/schema.sql` |
 | Onboarding agent replies with an error | `ANTHROPIC_API_KEY` unset or out of credit; the error text in the chat says which |
 | `redirect_uri_mismatch` | The URI in Google Cloud doesn't exactly match `GOOGLE_REDIRECT_URI` |
-| `access_denied` on the Google consent screen | Your Google account isn't in the OAuth consent screen's test users list |
+| `access_denied` on the Google consent screen | Your Google account isn't under Google Auth Platform → Audience → Test users |
+| "Connect Google Calendar" is greyed out | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` aren't set, or the dev server wasn't restarted |
+| "Google didn't return a refresh token" | You've authorized this app before. Remove it at [myaccount.google.com/permissions](https://myaccount.google.com/permissions) and connect again |
+| API not enabled at runtime | Step 1.2 — the Calendar API isn't enabled on the project |
 | The website step can't read a URL | The SSRF guard blocks private/internal addresses on purpose — `localhost` and LAN IPs will never be fetchable |
