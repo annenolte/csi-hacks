@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { PLUMBING } from "@/lib/trades";
 import { COMPONENT, isAuto, working, needField } from "@/lib/onboarding/components";
 import { toE164, _AREA_CODES } from "@/lib/onboarding/phone";
-import { describeAnswer } from "@/lib/onboarding/engine";
+import { answerForFollowup, describeAnswer } from "@/lib/onboarding/engine";
 
 describe("component vocabulary", () => {
   it("marks working stages as auto-continue and nothing else", () => {
@@ -144,5 +144,42 @@ describe("describeAnswer", () => {
       describeAnswer({ trade, component: working("Reading"), answer: undefined }),
     ).toBeNull();
     expect(describeAnswer({ trade, component: null, answer: {} })).toBeNull();
+  });
+});
+
+/*
+  Follow-up answers end up in the brief a voice agent reads out, so an
+  unrecognised value would be spoken to a caller verbatim.
+*/
+describe("answerForFollowup", () => {
+  const choice = {
+    kind: "choice",
+    options: [
+      { value: "give_number", label: "Give them the after-hours number" },
+      { value: "call_back", label: "Take details, we call back" },
+    ],
+  };
+
+  it("stores the label of a listed option", () => {
+    expect(answerForFollowup(choice, "call_back")).toBe("Take details, we call back");
+  });
+
+  it("refuses anything that isn't one of the options", () => {
+    expect(answerForFollowup(choice, "Yes")).toBeNull();
+    expect(answerForFollowup(choice, "(503) 555-0199")).toBeNull();
+    expect(answerForFollowup(choice, null)).toBeNull();
+  });
+
+  it("takes trimmed free text for an open question", () => {
+    const text = { kind: "text" };
+    expect(answerForFollowup(text, "  $89, waived on booking ")).toBe(
+      "$89, waived on booking",
+    );
+    expect(answerForFollowup(text, "   ")).toBeNull();
+    expect(answerForFollowup(text, { evil: true })).toBeNull();
+  });
+
+  it("has no answer when there is no question", () => {
+    expect(answerForFollowup(null, "anything")).toBeNull();
   });
 });
