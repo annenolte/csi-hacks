@@ -39,7 +39,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-call-slip.db
-call-slip.db-*
 *.db
 !.env.example

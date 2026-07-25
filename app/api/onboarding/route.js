@@ -1,38 +1,60 @@
 import { NextResponse } from "next/server";
-import { loadOnboarding, saveOnboarding } from "@/lib/db/onboarding";
+import { requireBusiness } from "@/lib/auth/require";
+import { getMessages, getOrCreateConversation } from "@/lib/data/conversation";
+import { openingTurn } from "@/lib/onboarding/engine";
+import { claudeIsConfigured } from "@/lib/onboarding/agent";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+/* The opening turn is a model call; the default budget would cut it off. */
+export const maxDuration = 120;
 
 /*
-  GET  -> the whole saved wizard state, for restoring on load
-  PATCH -> a partial save; the wizard posts after each step
+  GET -> the conversation so far, plus the input to render next.
 
-  No auth in Phase 2 — one hardcoded business id, applied server-side. The client
-  never names a business, so there is nothing to tamper with when accounts land.
+  On a fresh conversation this also writes the opening turn, so loading the page
+  for the first time and reloading it halfway through are the same code path.
+  There is no separate "start" endpoint to drift out of sync with this one.
 */
-
 export async function GET() {
-  try {
-    return NextResponse.json(await loadOnboarding());
-  } catch (err) {
-    console.error("Failed to load onboarding state:", err);
-    return NextResponse.json({ error: "Couldn't load your saved answers." }, { status: 500 });
-  }
-}
+  const { business, response } = await requireBusiness();
+  if (response) return response;
 
-export async function PATCH(request) {
-  let patch;
-  try {
-    patch = await request.json();
-  } catch {
-    return NextResponse.json({ error: "Send JSON." }, { status: 400 });
+  if (!claudeIsConfigured()) {
+    return NextResponse.json(
+      {
+        error:
+          "Setting up an agent needs an ANTHROPIC_API_KEY. Add one to .env.local and " +
+          "restart the server — see docs/SETUP.md.",
+      },
+      { status: 503 },
+    );
   }
 
+  let messages;
+
   try {
-    return NextResponse.json(await saveOnboarding(patch));
+    const conversation = await getOrCreateConversation(business.id);
+    messages = await getMessages(conversation.id);
+
+    if (messages.length === 0) {
+      await openingTurn({ business, conversation });
+      messages = await getMessages(conversation.id);
+    }
   } catch (err) {
-    console.error("Failed to save onboarding state:", err);
-    return NextResponse.json({ error: "Couldn't save that." }, { status: 500 });
+    console.error("Couldn't load onboarding:", err);
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
+
+  return NextResponse.json({
+    business: {
+      name: business.name,
+      tradeId: business.industry_id,
+      phoneNumber: business.agent_phone_number,
+      status: business.onboarding_status,
+    },
+    messages,
+    /* The live input is whatever the most recent agent turn put up. */
+    component: [...messages].reverse().find((m) => m.component)?.component ?? null,
+  });
 }

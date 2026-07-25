@@ -15,183 +15,193 @@ npx vitest run -t "collapses consecutive"   # one test by name
 ```
 
 Next 16 (App Router, JavaScript not TypeScript), React 19, Tailwind v4, Vitest,
-`@anthropic-ai/sdk`. Tailwind v4 has no `tailwind.config.js` — design tokens live in the
-`@theme` block in `app/globals.css`.
+`@anthropic-ai/sdk`, `@supabase/supabase-js`. Tailwind v4 has no
+`tailwind.config.js` — design tokens live in the `@theme` block in `app/globals.css`.
 
-`ANTHROPIC_API_KEY` is optional. Unset, the scraper runs hand-written heuristics; set (in
-`.env.local`), the same route runs Claude instead. Both return the same shape, so nothing
-downstream branches on which one ran.
-
-SQLite lives in `call-slip.db` (gitignored); override with `DATABASE_FILE`. The schema is
-applied idempotently on first open — there is no migrate step to run, and deleting the file
-is how you start over.
+**Setup is not optional.** `ANTHROPIC_API_KEY` and Supabase credentials are both
+required; the app tells you which is missing rather than half-working.
+`docs/SETUP.md` is the walkthrough — Supabase project, `supabase/schema.sql`, and
+the Google Cloud OAuth client. `supabase/schema.sql` is idempotent: re-running it
+is how you apply a schema change, and there is no migration tool.
 
 ## What this is
 
-A voice-agent backend for trade businesses (starting with plumbing). A business owner
-completes an onboarding wizard and hands over their existing materials; an LLM pass extracts
-structured facts from that corpus; the approved facts compile into a compact brief that a
-teammate's voice agent consumes over an HTTP contract to answer calls and book jobs.
+A voice-agent backend for trade businesses (starting with plumbing). An owner
+signs up, talks to a specialist onboarding agent that reads their website and
+their documents, answers whatever it couldn't find, and gets a phone number to
+give customers. The knowledge it collects is what a teammate's voice agent will
+read before it answers a call.
 
-`PLAN.md` defines four sequential phases with explicit done-conditions. Finish one before
-starting the next. **Phase 1 (the wizard, local state only) is built. Phase 2 onward is not.**
+**We are not building the calling agent.** We build the layer that gets handed to
+it. Three pages:
 
-1. ~~**Onboarding form**~~ — four-screen wizard.
-2. ~~**Persistence**~~ — SQLite + Drizzle, saves after each step.
-3. ~~**Synthesis**~~ — whole-corpus extraction, price classifier, gap interview.
-4. **Agent endpoints** — `/api/agent/v1/brief`, availability, booking, call simulator. **Next.**
+1. **Landing** (`app/page.js`) — marketing, sign in, create an account.
+2. **Onboarding** (`app/onboarding/`) — a conversation, not a form.
+3. **Dashboard** (`app/dashboard/`) — the number, the calendar, the documents, and
+   an editable view of everything the agent knows.
 
-Phase 4 is blocked on one thing that isn't in this repo: `stages/01-agent-api-contract.md`,
-the frozen field names. Don't invent them — ask.
+### What isn't built
 
-`stages/` — the detailed spec folder, including the frozen contract at
-`stages/01-agent-api-contract.md` — is referenced by `PLAN.md` but is **not in this repo**.
-Ask for it rather than reconstructing it. Same for the original `onboarding.jsx` prototype;
-the wizard here was built fresh.
+The agent API itself — `/api/agent/v1/brief`, availability, booking. It is
+deliberately not built yet: the shape of that seam depends on the voice agent
+that already exists on the teammate's side, and guessing at field names is the
+single most likely way this project breaks.
+`docs/voice-agent-integration-request.md` is the prompt sent to that side asking
+their agent to document what it consumes. **Build the endpoints when that document
+comes back, not before, and don't invent field names in the meantime.**
+
+The read/write pieces the API will need already exist and are tested by use:
+`busyPeriods` and `createEvent` in `lib/calendar/google.js`.
 
 ## Layout
 
 ```
-lib/trades.js            the trade definition — the source of truth (read this first)
-lib/useOnboarding.js     all wizard state, one hook
-lib/format.js            type-driven display formatting for any need's value
-lib/scrape/fetch.js      fetch one page + the SSRF guard; HTML → text
-lib/scrape/heuristics.js regex extractors, one per named strategy
-lib/scrape/claude.js     the same extraction via Claude, when a key is present
-lib/fieldSchema.js       need → JSON Schema, shared by both extractors
-lib/answered.js          isAnswered, shared by client and server
+lib/trades.js              the trade definition — the source of truth (read this first)
+lib/brand.js               product name; it is a placeholder, renamed in one line
+lib/supabase.js            the only place the service-role key is read
+lib/data/business.js       the only file mapping app shapes to rows
+lib/data/conversation.js   onboarding transcript persistence
+lib/auth/password.js       scrypt hashing — a security control, not a utility
+lib/auth/session.js        signed httpOnly cookie + a sessions row
+lib/auth/require.js        where business_id comes from. Every data route starts here
+lib/onboarding/engine.js   the script: stages, side effects, what happens next
+lib/onboarding/agent.js    the two model calls that make it read as a conversation
+lib/onboarding/components.js  the closed set of inputs the agent can render
+lib/onboarding/phone.js    the generated number (555-01xx, reserved for fiction)
+lib/synthesis/run.js       whole-corpus read, shared by onboarding and the dashboard
 lib/synthesis/classify.js  the price classifier — read this before touching prices
-lib/synthesis/corpus.js  every document into one prompt
-lib/synthesis/extract.js the two Claude calls (fields, prices)
-lib/synthesis/report.js  facts + conflicts + gaps
-lib/db/schema.js         drizzle tables
-lib/db/index.js          the connection + idempotent DDL + BUSINESS_ID
-lib/db/onboarding.js     the only file that maps wizard shape ↔ rows
-app/api/scrape/route.js  POST { url, tradeId } → { fields }
-app/api/onboarding/      GET/PATCH state; documents/ POST + DELETE
-components/Wizard.jsx    shell: pill step nav, two-column layout, next/back guard
-components/NeedField.jsx renders any need from its type alone, plus provenance
-components/CallSlip.jsx  the right rail, checks off against needs
-components/steps/        the four screens
-design/references/       screenshots the visual language is taken from
+lib/scrape/fetch.js        fetch one page + the SSRF guard; HTML → text
+lib/scrape/claude.js       single-page extraction
+lib/calendar/google.js     OAuth, token refresh, free/busy, event creation
+lib/fieldSchema.js         need → JSON Schema, shared by both extractors
+components/NeedField.jsx   renders any need from its type alone
+components/onboarding/     the chat and the structured inputs it renders
+components/dashboard/      overview and knowledge tabs
+supabase/schema.sql        the whole schema, idempotent, RLS on with no policies
 ```
-
-**The wizard is four screens: trade → business → calendar → review.** Everything about the
-business lives on one screen (`StepBusiness.jsx`): the website bar, the fields it fills, the
-file upload, and the free-text notes. It used to be two screens that *both* asked for the
-website, which read as the form having forgotten what you'd told it. There is exactly one
-place a website URL is entered — `WebsiteAutofill.jsx`. Don't add a second.
 
 ## Architecture invariants
 
 These are the decisions that are expensive to reverse. Preserve them.
 
-**`PLUMBING.needs` in `lib/trades.js` drives everything.** One array feeds five consumers:
-the wizard fields (the business screen), the call slip's checklist, the website scraper (via each need's
-`scrape` strategy name), Phase 3's extraction targets (via `extract`), and the Phase 3 gap
-interview (which uses each need's `question` verbatim). Adding a need there must make it
-appear in all five with no other edit.
+**`PLUMBING.needs` in `lib/trades.js` drives everything.** One array feeds five
+consumers: the questions the onboarding agent asks (using each need's `question`
+verbatim), the dashboard's knowledge rows, the website scraper (via `scrape`),
+whole-corpus extraction (via `extract`), and the gap queue. Adding a need there
+must make it appear in all five with no other edit.
 
-`NeedField.jsx` switches on `need.type` and never reads `need.key`; `CallSlip.jsx` and
-`StepReview.jsx` map over `slip` generically; `heuristics.js` is a registry keyed by strategy
-name, and `claude.js` generates its JSON schema from `needs`. **If you find yourself typing a
-need's key into JSX or into an extractor, that's the bug** — fix the generic code instead.
-`test/trades.test.js` guards the schema shape so a malformed need fails loudly rather than
-rendering blank.
+`NeedField.jsx` switches on `need.type` and never reads `need.key`;
+`Knowledge.jsx` maps over the needs list generically; `claude.js` and `extract.js`
+generate their JSON schema from `needs`. **If you find yourself typing a need's
+key into JSX or into an extractor, that's the bug** — fix the generic code
+instead. `test/trades.test.js` guards the schema shape.
 
-**Website values fill; typed values win.** A scrape fills every field the person hasn't typed
-themselves, and offers its value on the ones they have (`Provenance` in `NeedField.jsx`).
-The manual set lives in a **ref**, not state, in `useOnboarding` — a fetch takes seconds, and
-reading it out of a closure would miss anything typed mid-flight and clobber it.
+The one deliberate exception is the `followups` key: model-composed
+question-and-answer pairs that aren't needs and don't pretend to be. They get
+their own block on the dashboard rather than being flattened into a row.
 
-**The scrape route is an SSRF sink.** `url` comes from whoever is filling in the form, so
-`lib/scrape/fetch.js` resolves every host and rejects private ranges (loopback, RFC1918,
-`169.254.169.254`, CGNAT, IPv6 ULA/link-local) before any request goes out, re-checking on
-each redirect hop. `test/fetch.test.js` covers this — treat those tests as a security control,
-not a nicety.
+**The script is code; the words are the model's.** `lib/onboarding/engine.js`
+decides which stage comes next, which component renders, and what gets written.
+`lib/onboarding/agent.js` writes the prose. That split is why the conversation
+can feel open-ended without ever skipping a question or stranding someone. If you
+are tempted to let the model choose the next stage, don't — a conversation that
+can wander is a conversation that can lose someone at step three. The one place
+the model composes structure is `draftFollowups`, and even there it picks from
+`choice` or `text` and nothing else.
 
-**Whole corpus in one prompt** (Phase 3). No chunking, no embeddings, no vector search. A
-small trade business's entire document set fits in a single context, which buys better
-extraction and exact verbatim citations. Two calls: one for `needs` fields, one for services
-and prices. Every extracted fact carries `value`, `confidence`, and its source sentence.
+**business_id comes from the session, never from the client.** `requireBusiness()`
+in `lib/auth/require.js` is the only place it is decided. No route reads a
+business id from a body or a query string, which is what makes one shared
+service-role connection safe. Adding a route that takes a business id from the
+client re-opens every account to every other.
 
-**Not-found is a valid answer.** If the corpus doesn't state something, return `found: false`.
-Conflicting documents return both values rather than picking. A missing answer becomes a gap
-the owner fills; a guessed one poisons the agent. The review screen says this to the user, so
-don't quietly add fallbacks that contradict it. The gap interview lives on the review screen
-and renders `NeedField` — the same component the form uses, because both read the same `needs`
-array — asking with each need's `question` rather than its `label`.
+**The service-role key bypasses RLS, so `lib/supabase.js` is `server-only`.** The
+schema enables RLS on every table with no policies — it fails closed. The browser
+never talks to Supabase. Never prefix the service-role key with `NEXT_PUBLIC_`.
 
-**Price classification happens in code, never in the prompt** — `lib/synthesis/classify.js`.
-Bare number → `quotable`; hedged, ranged, or an hourly rate → `range_only`; everything else,
-and anything below `PLUMBING.confidenceFloor` (0.7) → `human_required`. `PLUMBING.alwaysHuman`
-(`sewer_line`, `repipe`) overrides any price in any document. The extraction prompt is
-explicitly told *not* to judge safety and to preserve qualifying words verbatim, because the
-classifier reads them — normalising "$95 per hour" to "$95" would promote a rate to a flat
-quote. The unknown case defaults to `human_required`: a shape we don't recognise is one we
-don't quote. `test/classify.test.js` covers this, including the "flat $4,000 for sewer work"
-case `PLAN.md` names.
+**The scrape path is an SSRF sink.** The URL comes from whoever is filling in the
+form, so `lib/scrape/fetch.js` resolves every host and rejects private ranges
+(loopback, RFC1918, `169.254.169.254`, CGNAT, IPv6 ULA/link-local) before any
+request goes out, re-checking on each redirect hop. `test/fetch.test.js` covers
+this — treat those tests as a security control, not a nicety.
 
-**Two extraction paths, one schema.** `lib/scrape/claude.js` reads one page and picks the
-best-supported value; `lib/synthesis/extract.js` reads the whole corpus and keeps conflicts.
-Both build their JSON Schema with `buildFieldsSchema` in `lib/fieldSchema.js`. That shape —
-`found` plus a possibly-empty `values` array — is not incidental: an earlier nullable
-`anyOf: [<value>, null]` returned a **500 on every request**. Don't reintroduce nullable
-unions over enum/array types.
+**Whole corpus in one prompt.** No chunking, no embeddings, no vector search. A
+small trade business's entire document set fits in one context, which buys better
+extraction and exact verbatim citations. Two calls: one for `needs` fields, one
+for services and prices. Every extracted fact carries `value`, `confidence`, and
+its source sentence.
 
-**List fields can't conflict.** A corpus naming each service in its own sentence has stated
-one list, not five competing answers. `isMultiValue`/`mergeMultiValues` fold those before the
-conflict logic sees them, so a disagreement in the UI is always a real one.
+**Not-found is a valid answer.** If the corpus doesn't state something, the
+extractor returns `found: false`. Conflicting documents return both values rather
+than picking. A missing answer becomes a question the owner answers; a guessed one
+gets repeated to real callers as though the business had promised it. Only facts
+that are unconflicted *and* at or above 0.7 confidence are promoted into
+`business_fields` (`lib/synthesis/run.js`) — everything else becomes a question.
+Don't add fallbacks that contradict this.
 
-**Keep `business_id` even without auth.** There is one hardcoded business (`BUSINESS_ID` in
-`lib/db/index.js`), but every table carries the column and every query in
-`lib/db/onboarding.js` is scoped by it, so accounts become a change of *where the id comes
-from* rather than a rewrite. The id is applied server-side and never sent by the client —
-there's nothing to tamper with when auth lands. `test/db.test.js` asserts the scoping holds.
+**Price classification happens in code, never in the prompt** —
+`lib/synthesis/classify.js`. Bare number → `quotable`; hedged, ranged, or an
+hourly rate → `range_only`; everything else, and anything below
+`PLUMBING.confidenceFloor` (0.7) → `human_required`. `PLUMBING.alwaysHuman`
+(`sewer_line`, `repipe`) overrides any price in any document. The extraction
+prompt is explicitly told *not* to judge safety and to preserve qualifying words
+verbatim, because the classifier reads them — normalising "$95 per hour" to "$95"
+would promote a rate to a flat quote. The unknown case defaults to
+`human_required`: a shape we don't recognise is one we don't quote.
+`test/classify.test.js` covers this, including "flat $4,000 for sewer work".
 
-**Answers are one row per field, not a JSON blob.** This is the one table `PLAN.md` doesn't
-name, and the reason is provenance: each value carries its source (`manual`/`website`),
-confidence, and the sentence it was read from. Phase 3 returns exactly that shape per field —
-and may return two conflicting values for one key rather than picking — so this is where it
-lands. `suggested_value` keeps the website's version even after the owner types over it, which
-is what lets the form still offer "use that instead" after a reload.
+**Two extraction paths, one schema.** `lib/scrape/claude.js` reads one page and
+picks the best-supported value; `lib/synthesis/extract.js` reads the whole corpus
+and keeps conflicts. Both build their JSON Schema with `buildFieldsSchema` in
+`lib/fieldSchema.js`. That shape — `found` plus a possibly-empty `values` array —
+is not incidental: an earlier nullable `anyOf: [<value>, null]` returned a **500
+on every request**. Don't reintroduce nullable unions over enum/array types.
 
-**Save cadence:** after each step (`next`/`back`/`goToStep`), plus immediately on the discrete
-events — trade choice, calendar choice, a completed scrape, and document add/remove. Typing
-alone doesn't save; the step transition catches it. `persist()` reads a ref synced in an
-effect, so anything that changes state *and* saves in the same handler must pass the new
-values through `persist`'s overrides rather than relying on the ref.
+**List fields can't conflict.** A corpus naming each service in its own sentence
+has stated one list, not five competing answers. `isMultiValue`/`mergeMultiValues`
+fold those before the conflict logic sees them, so a disagreement in the UI is
+always a real one.
 
-**The agent API contract is frozen.** Field names are agreed in writing with the teammate
-building the voice agent before either side builds against them. Don't rename or reshape
-contract fields unilaterally. Build the endpoints and the call simulator before the voice
-agent exists, not after.
+**A document change re-reads everything.** Adding or removing a document re-runs
+the whole corpus rather than diffing. A removed document has to take its facts
+with it, and a new one can contradict an old one — neither is expressible as an
+incremental update, and a stale fact here is one the agent states on a call.
+
+**Text documents only.** We quote sentences back as the source of every fact.
+Accepting a PDF and silently extracting a mangled text layer would put
+unattributable quotes in front of the owner as if they were verbatim.
+
+**The generated phone number is from the 555-01xx block.** That range is reserved
+by the numbering plan for fiction and is the only one guaranteed never to ring a
+real person. A realistic-looking number would mean printing a stranger's phone
+number on a dashboard and telling a business to hand it to customers.
+
+**Google needs `access_type=offline` and `prompt=consent`.** Without both, Google
+omits the refresh token on every authorisation after the first, and the connection
+works today and silently breaks within the hour. `completeConnection` refuses to
+store a connection without one.
 
 ## Design language
 
-Taken from `design/references/*.png` (the Merlin marketing site). Tokens are in the `@theme`
-block of `app/globals.css`; use those rather than raw hex.
+Taken from `design/references/*.png` (the Merlin marketing site). Tokens are in
+the `@theme` block of `app/globals.css`; use those rather than raw hex.
 
-Warm off-white canvas (`canvas`) with white cards, near-black ink, one blue accent. Pill
-geometry for buttons, nav tabs and chips. Hairline `line` borders with `shadow-lift` /
-`shadow-pop`. Headlines use the `display` utility (tight tracking) and the two-tone trick —
-black lead clause, grey continuation, via `StepHeading` in `components/steps/StepTrade.jsx`.
-Handwritten asides use `ScriptNote` (Caveat, with a hand-drawn arrow). The pastel mesh that
-bleeds off the top edge is the `mesh-top` utility.
+Warm off-white canvas (`canvas`) with white cards, near-black ink, one blue
+accent. Pill geometry for buttons, nav tabs and chips. Hairline `line` borders
+with `shadow-lift` / `shadow-pop`. Headlines use the `display` utility (tight
+tracking) and the two-tone trick — black lead clause, grey continuation, via
+`Heading` in `components/ui.jsx`. Handwritten asides use `ScriptNote` (Caveat,
+with a hand-drawn arrow). The pastel mesh that bleeds off the top edge is the
+`mesh-top` utility.
 
-Light mode only, on purpose — the reference has no dark mode and the wizard should read as
-paper.
-
-## State
-
-Phase 1 is deliberately in-memory: `useOnboarding` holds everything and a refresh starts over.
-Keep `answers` flat and serialisable, because Phase 2 posts this exact shape after each step.
-Uploaded files are read client-side into `{ kind, name, source, text }`, which is the
-`documents` row shape.
+Light mode only, on purpose — the reference has no dark mode and the product
+should read as paper.
 
 ## Security rule for customer lookup
 
-Name alone is never verification. Matching a caller on a spoken name and reading back an
-address lets anyone who knows a neighbour's name learn where they live and when they'll be
-out. Match on the inbound phone number, and require one non-public detail before the agent
-discloses anything specific to an account.
+Name alone is never verification. Matching a caller on a spoken name and reading
+back an address lets anyone who knows a neighbour's name learn where they live and
+when they'll be out. Match on the inbound phone number, and require one non-public
+detail before the agent discloses anything specific to an account. This has to
+hold on the voice-agent side too — it is section 7 of
+`docs/voice-agent-integration-request.md` for exactly that reason.

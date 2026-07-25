@@ -94,6 +94,20 @@ export function ScriptNote({ children, color = "green", className = "" }) {
   );
 }
 
+/*
+  The two-tone headline from the reference: a black lead clause that carries the
+  point, then a grey continuation that qualifies it. Used on the landing page and
+  at the top of the onboarding conversation.
+*/
+export function Heading({ lead, rest, className = "" }) {
+  return (
+    <h1 className={`display max-w-[34ch] text-[30px] sm:text-[38px] ${className}`}>
+      <span className="text-ink">{lead}</span>
+      {rest && <> <span className="text-muted">{rest}</span></>}
+    </h1>
+  );
+}
+
 /** Label + hint + error wrapper shared by every field type. */
 export function FieldShell({ id, label, hint, error, children }) {
   return (
