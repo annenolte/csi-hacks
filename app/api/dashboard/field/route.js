@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireBusiness } from "@/lib/auth/require";
 import { getTrade } from "@/lib/trades";
+import { sanitiseAnswer } from "@/lib/fieldSchema";
 import { setField } from "@/lib/data/business";
 
 export const runtime = "nodejs";
@@ -38,8 +39,23 @@ export async function PATCH(request) {
     return NextResponse.json({ error: "There's no such field." }, { status: 400 });
   }
 
+  /*
+    And validate the value, not just the key. A value that isn't one of a
+    choice's options is not an answer however plausible it looks — it would
+    render as itself on this screen and be read aloud to a caller.
+    Clearing a field is legitimate, so null passes through as a deletion.
+  */
+  const value = sanitiseAnswer(trade, need, body.value);
+
+  if (body.value !== null && value === null) {
+    return NextResponse.json(
+      { error: `That isn't a valid value for ${need.label}.` },
+      { status: 400 },
+    );
+  }
+
   try {
-    await setField(business.id, need.key, body.value, { source: "operator" });
+    await setField(business.id, need.key, value, { source: "operator" });
   } catch (err) {
     console.error("Couldn't save that field:", err);
     return NextResponse.json({ error: err.message }, { status: 500 });

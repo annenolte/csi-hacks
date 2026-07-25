@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { PLUMBING, PRICE_TIERS } from "@/lib/trades";
 import { buildCorpus } from "@/lib/synthesis/corpus";
 import { buildReport } from "@/lib/synthesis/report";
-import { isMultiValue, mergeMultiValues } from "@/lib/fieldSchema";
+import { isMultiValue, mergeMultiValues, sanitiseAnswer } from "@/lib/fieldSchema";
 
 const need = (key) => PLUMBING.needs.find((n) => n.key === key);
 
@@ -207,5 +207,63 @@ describe("buildReport", () => {
     expect(report.facts).toEqual([]);
     expect(report.conflicts).toEqual([]);
     expect(report.gaps).toHaveLength(PLUMBING.needs.length);
+  });
+});
+
+/*
+  Answers arrive as JSON over HTTP. The UI can't produce a bad one — a choice
+  renders as buttons — but "the client wouldn't send that" is not a check, and
+  everything downstream (the dashboard, the next turn's prompt, the brief a voice
+  agent reads aloud) trusts whatever gets stored.
+*/
+describe("sanitiseAnswer", () => {
+  const needFor = (key) => PLUMBING.needs.find((n) => n.key === key);
+
+  it("rejects a value that isn't one of a choice's options", () => {
+    const need = needFor("emergency_policy");
+    expect(sanitiseAnswer(PLUMBING, need, "(503) 555-0199")).toBeNull();
+    expect(sanitiseAnswer(PLUMBING, need, "yes please")).toBeNull();
+    expect(sanitiseAnswer(PLUMBING, need, "24_7")).toBe("24_7");
+  });
+
+  it("drops unknown entries from a multi-choice rather than storing them", () => {
+    const need = needFor("services_offered");
+    expect(
+      sanitiseAnswer(PLUMBING, need, ["drain_clear", "time_travel", "repipe"]),
+    ).toEqual(["drain_clear", "repipe"]);
+    expect(sanitiseAnswer(PLUMBING, need, ["time_travel"])).toBeNull();
+    expect(sanitiseAnswer(PLUMBING, need, "drain_clear")).toBeNull();
+  });
+
+  it("keeps only real days and well-formed times in hours", () => {
+    const need = needFor("hours");
+    expect(
+      sanitiseAnswer(PLUMBING, need, {
+        mon: { open: "08:00", close: "17:00" },
+        funday: { open: "08:00", close: "17:00" },
+        tue: { open: "25:00", close: "17:00" },
+        wed: { open: "8am", close: "5pm" },
+      }),
+    ).toEqual({ mon: { open: "08:00", close: "17:00" } });
+
+    expect(sanitiseAnswer(PLUMBING, need, { tue: { open: "25:00", close: "9" } })).toBeNull();
+    expect(sanitiseAnswer(PLUMBING, need, "Mon to Fri")).toBeNull();
+  });
+
+  it("cleans a chip list and refuses a bare string", () => {
+    const need = needFor("service_area");
+    expect(sanitiseAnswer(PLUMBING, need, [" Portland ", "portland", "", 7, "Tigard"])).toEqual(
+      ["Portland", "Tigard"],
+    );
+    expect(sanitiseAnswer(PLUMBING, need, "Portland")).toBeNull();
+    expect(sanitiseAnswer(PLUMBING, need, [])).toBeNull();
+  });
+
+  it("trims text and treats whitespace-only as unanswered", () => {
+    const need = needFor("business_name");
+    expect(sanitiseAnswer(PLUMBING, need, "  Savior Plumbing  ")).toBe("Savior Plumbing");
+    expect(sanitiseAnswer(PLUMBING, need, "   ")).toBeNull();
+    expect(sanitiseAnswer(PLUMBING, need, { evil: true })).toBeNull();
+    expect(sanitiseAnswer(PLUMBING, need, null)).toBeNull();
   });
 });

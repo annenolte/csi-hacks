@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { authenticate } from "@/lib/auth/accounts";
-import { createSession } from "@/lib/auth/session";
+import { assertSessionsConfigured, createSession } from "@/lib/auth/session";
 import { getBusinessForAccount } from "@/lib/data/business";
 
 export const runtime = "nodejs";
@@ -11,6 +11,14 @@ export async function POST(request) {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: "Malformed request." }, { status: 400 });
+  }
+
+  /* Fail on a missing secret before checking a password, not after. */
+  try {
+    assertSessionsConfigured();
+  } catch (err) {
+    console.error("Sign-in blocked:", err);
+    return NextResponse.json({ error: err.message }, { status: 503 });
   }
 
   let result;

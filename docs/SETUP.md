@@ -38,13 +38,15 @@ I can't create the project for you — it needs your login. Five minutes:
    [`supabase/schema.sql`](../supabase/schema.sql) and hit **Run**. It should
    report success with no rows. The file is idempotent — re-running it after a
    schema change is safe and is how you apply updates.
-4. **Project Settings** → **API keys**. Copy three values:
+4. **Project Settings** → **API keys**. Copy two values:
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co
-SUPABASE_ANON_KEY=<the anon / publishable key>
 SUPABASE_SERVICE_ROLE_KEY=<the service_role / secret key>
 ```
+
+The anon (publishable) key isn't needed. The browser never talks to Supabase, and
+every table has RLS on with no policies, so that key can't read anything anyway.
 
 ### About that service role key
 
