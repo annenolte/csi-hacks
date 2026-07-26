@@ -1,0 +1,20 @@
+- generic [active] [ref=f12e1]:
+  - generic [ref=f12e3]:
+    - banner [ref=f12e4]:
+      - link "Frontdesk" [ref=f12e5] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f12e23]: Savior Plumbing
+    - generic [ref=f12e14]:
+      - generic [ref=f12e24]:
+        - generic [ref=f12e25]: ✂
+        - paragraph [ref=f12e26]: I'm the specialist who'll get your phone agent set up, and I'll keep it quick. Pick your trade from the card below so I can load the right call handling for it.
+      - paragraph [ref=f12e70]: Plumbing
+      - generic [ref=f12e71]:
+        - generic [ref=f12e72]: ✂
+        - paragraph [ref=f12e73]: Plumbing it is. Easiest way to start is for me to read your website myself — service area, hours, what you do and don't take on — so you're not retyping things you've already written down. Drop the address in below, and if Savior Plumbing doesn't have a site, there's an option to say so.
+      - paragraph [ref=f12e79]: saviorplumbing.com
+      - generic [ref=f12e80]:
+        - generic [ref=f12e81]: ✂
+        - generic [ref=f12e82]: Reading your website
+  - button "Open Next.js Dev Tools" [ref=f12e64] [cursor=pointer]
+  - alert [ref=f12e68]

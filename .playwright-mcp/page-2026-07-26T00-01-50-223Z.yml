@@ -1,0 +1,15 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e3]:
+    - banner [ref=f1e4]:
+      - link "Frontdesk" [ref=f1e6] [cursor=pointer]:
+        - /url: /
+      - button "Sign out Sign out" [ref=f1e15]
+    - navigation "Dashboard sections" [ref=f1e17]:
+      - list [ref=f1e18]:
+        - listitem [ref=f1e19]:
+          - button "Overview" [ref=f1e20]
+        - listitem [ref=f1e21]:
+          - button "What it knows" [ref=f1e22]
+    - main [ref=f1e23]:
+      - status [ref=f1e37]: Loading your dashboard.
+  - alert [ref=f1e38]

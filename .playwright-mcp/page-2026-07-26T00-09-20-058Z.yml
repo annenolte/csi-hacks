@@ -1,0 +1,58 @@
+- generic [active] [ref=f12e1]:
+  - generic [ref=f12e3]:
+    - link "Frontdesk" [ref=f12e4] [cursor=pointer]:
+      - /url: /
+    - generic [ref=f12e13]:
+      - heading "Ten minutes now. Every call after." [level=1] [ref=f12e15]:
+        - generic [ref=f12e16]: Ten minutes now.
+        - generic [ref=f12e17]: Every call after.
+      - generic [ref=f12e18]:
+        - generic [ref=f12e19]:
+          - heading "Create your account" [level=2] [ref=f12e20]
+          - generic [ref=f12e21]:
+            - generic [ref=f12e22]:
+              - generic [ref=f12e23]:
+                - generic [ref=f12e24]: First name
+                - textbox "First name" [ref=f12e25]
+              - generic [ref=f12e26]:
+                - generic [ref=f12e27]: Last name
+                - textbox "Last name" [ref=f12e28]
+              - generic [ref=f12e29]:
+                - generic [ref=f12e30]: Company name
+                - textbox "Company name" [ref=f12e31]
+              - generic [ref=f12e32]:
+                - generic [ref=f12e33]: Email
+                - textbox "Email" [ref=f12e34]
+              - generic [ref=f12e35]:
+                - generic [ref=f12e36]: Password
+                - textbox "Password" [ref=f12e37]
+                - paragraph [ref=f12e38]: At least 8 characters.
+            - button "Create account" [ref=f12e39]
+        - paragraph [ref=f12e44]:
+          - text: Already have an account?
+          - link "Sign in Sign in" [ref=f12e46] [cursor=pointer]:
+            - /url: /signin
+      - generic [ref=f12e48]:
+        - paragraph [ref=f12e49]: You give Frontdesk the website and the documents you already have. It does the reading, and comes back with only what it couldn't find.
+        - generic [ref=f12e50]: No card, no contract
+        - list [ref=f12e55]:
+          - listitem [ref=f12e56]:
+            - generic [ref=f12e57]: "1"
+            - generic [ref=f12e58]:
+              - paragraph [ref=f12e59]: It reads first
+              - paragraph [ref=f12e60]: Your website and your documents, before it asks you anything.
+          - listitem [ref=f12e61]:
+            - generic [ref=f12e62]: "2"
+            - generic [ref=f12e63]:
+              - paragraph [ref=f12e64]: It asks second
+              - paragraph [ref=f12e65]: Only about the gaps — and only once.
+          - listitem [ref=f12e66]:
+            - generic [ref=f12e67]: "3"
+            - generic [ref=f12e68]:
+              - paragraph [ref=f12e69]: You get a number
+              - paragraph [ref=f12e70]: On your dashboard, with everything the agent knows beside it.
+        - paragraph [ref=f12e71]:
+          - link "← Back to the site ← Back to the site" [ref=f12e72] [cursor=pointer]:
+            - /url: /
+  - button "Open Next.js Dev Tools" [ref=f12e79] [cursor=pointer]
+  - alert [ref=f12e83]

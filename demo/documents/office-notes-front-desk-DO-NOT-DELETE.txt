@@ -1,0 +1,129 @@
+notes from the front desk - started this when Karen left, keep adding to it
+last touched ~march 2026 by marisol
+
+*** SAMPLE / FICTIONAL FILE - made up for software testing. not real Savior Plumbing info ***
+
+===============================
+STUFF PEOPLE ASK ALL THE TIME
+===============================
+
+- "how much is it just to come out" --> $95 service call. gets taken off if they
+  go ahead with the repair same day. (danny says the book says 89 but we've been
+  saying 95 since january, need to just fix the book already)
+
+- "are you open saturday" -- no. mon-fri 730 to 430. we DO take saturday jobs
+  sometimes if its an emergency but its by appointment and danny has to ok it.
+  DO NOT just put it on the board.
+
+- thursdays we usually run til 5 because thats when the supply house
+  closes late, but dont advertise that
+
+- holidays: closed. thanksgiving, xmas, new years, july 4th, labor day,
+  memorial day. (are we closed on presidents day? i think we worked last year??
+  ASK RUBEN)
+
+===============================
+SERVICE AREA
+===============================
+alameda + contra costa county. the ones we actually go to a lot:
+  pleasanton, dublin, livermore, san ramon, danville, alamo, walnut creek,
+  pleasant hill, concord, castro valley, hayward, fremont, union city,
+  newark, san leandro, lafayette, orinda, moraga, martinez, antioch (barely)
+
+DO NOT BOOK:
+  - tracy, manteca, stockton -- thats san joaquin, different county, we dont go
+  - anything past antioch/oakley going east, too far
+  - san francisco / marin / anything over a bridge
+
+if theyre borderline just take the info and check with dispatch. dont say no
+outright, sometimes danny will do it if its a repeat customer.
+
+===============================
+THINGS WE DONT DO
+===============================
+(learned these the hard way)
+  - septic tanks / septic systems. we do sewer not septic. refer out.
+  - well pumps
+  - appliance repair (dishwasher, washing machine) - we do the SUPPLY LINE and
+    the drain but not the machine itself
+  - HVAC / furnace / AC. people call us for this constantly because of the
+    water heater thing. we dont do it.
+  - fire sprinkler systems
+  - drywall repair. we open the wall, WE DO NOT CLOSE IT. tell them this UP
+    FRONT or they get mad. put it on the estimate in writing.
+  - pool plumbing
+  - roto rooting a mobile home park common line, danny says never again
+
+===============================
+PAYMENT (need to confirm w/ ruben)
+===============================
+  - cards yes, we take visa mc amex? -- i think amex has a fee?? CHECK
+  - checks yes
+  - cash yes
+  - venmo/zelle -- techs are NOT supposed to take these but i know some do.
+    marisol needs to make a call on this
+  - theres a pay online link on the website
+  - financing - we had synchrony a while back, i dont think its active anymore.
+    DONT PROMISE FINANCING until someone confirms
+  - deposit on big jobs - 50%? i've seen 30% too. no consistent rule.
+    danny handles it case by case
+
+===============================
+HOME WARRANTY COMPANIES
+===============================
+we have gotten burned on these. old republic + american home shield both
+took forever to pay. i think we stopped taking them but nobody wrote it down.
+current instruction: take the info, tell them the office will call back,
+DO NOT schedule the job. ask danny.
+
+===============================
+THE MEMBERSHIP THING
+===============================
+ruben wanted to start a yearly maintenance plan, we called it the
+"savior care plan" -- $199/yr, includes annual water heater flush,
+free camera inspection, 10% off repairs, front of the line scheduling.
+we sold maybe 15 of these in 2024 and then just stopped pushing it.
+existing members still get honored. NOT on the website. dont bring it up
+unless they ask about it.
+
+===============================
+DISPATCH NOTES / WHO GOES WHERE
+===============================
+  - ruben and danny = journeymen, can go anywhere, any job
+  - carlos = journeyman, best on water heaters + tankless, spanish
+  - miguel = journeyman, best on sewer/camera/jetting
+  - tony = apprentice, does NOT go alone on gas work or anything commercial
+  - new guy (starts next month?) - ride alongs only for first 3 wks
+
+commercial jobs -> danny only, or danny + one other
+tankless -> carlos if at all possible
+big sewer / jetting -> miguel, he has the jetter on his van
+gas leak -> journeyman only, never tony alone
+
+spanish speaking customer -> carlos or miguel preferred. ruben ok.
+
+===============================
+RANDOM
+===============================
+- 2 YEAR LABOR WARRANTY. say it on every call, its our best selling point.
+- diamond certified 14 yrs running. people in pleasanton actually know what
+  that is, mention it here.
+- if someone found us on yelp they usually price shop. lead with the warranty
+  and the fact we're flat rate, not the price.
+- we get a LOT of calls from property managers. they want net 30. we do it for
+  the 3 or 4 big ones (need to list who those are). everyone else pays on
+  completion.
+- the answering machine message still says "office hours 8 to 5" which is
+  WRONG, has been wrong for like two years, somebody please fix it
+- when a tech is running late CALL THE CUSTOMER. before the window ends not
+  after. this is the #1 thing we get complaints about, by far.
+- old jobs / warranty lookups are in the field app but anything before
+  2019 is in the filing cabinet in ruben's office
+
+TODO for whoever reads this:
+  [ ] settle the $89 vs $95 thing
+  [ ] confirm amex
+  [ ] write down the net-30 property manager list
+  [ ] after hours pricing - danny has been quoting "time and a half-ish"
+      which is not a real number
+  [ ] fix the voicemail greeting

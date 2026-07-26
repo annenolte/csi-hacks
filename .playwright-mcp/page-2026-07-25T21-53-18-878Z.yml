@@ -1,0 +1,59 @@
+- generic [ref=f5e1]:
+  - generic [ref=f5e3]:
+    - banner [ref=f5e4]:
+      - generic [ref=f5e5]:
+        - link "Frontdesk" [ref=f5e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f5e7]: ✂
+        - paragraph [ref=f5e28]: Nolte & Sons Plumbing · Plumbing
+      - button "Sign out" [ref=f5e9]
+    - navigation "Dashboard sections" [ref=f5e10]:
+      - list [ref=f5e11]:
+        - listitem [ref=f5e12]:
+          - button "Overview" [active] [ref=f5e13]
+        - listitem [ref=f5e14]:
+          - button "What it knows" [ref=f5e15]
+    - main [ref=f5e16]:
+      - generic [ref=f5e247]:
+        - generic [ref=f5e248]:
+          - paragraph [ref=f5e249]: Your agent's number
+          - paragraph [ref=f5e250]: (813) 555-0156
+          - paragraph [ref=f5e251]: Give this to customers. It isn't connected to a carrier in this prototype, so it won't actually ring.
+          - button "Copy number" [ref=f5e253]
+        - generic [ref=f5e254]:
+          - generic [ref=f5e255]:
+            - heading "Calendar" [level=2] [ref=f5e256]
+            - generic [ref=f5e257]: Not connected
+          - paragraph [ref=f5e258]: Connect Google Calendar so the agent can offer real open slots and put jobs straight into your diary.
+          - link [ref=f5e260] [cursor=pointer]:
+            - /url: /api/calendar/google/start
+            - button "Connect Google Calendar" [ref=f5e261]
+        - generic [ref=f5e264]:
+          - generic [ref=f5e265]:
+            - heading "What the agent has read" [level=2] [ref=f5e266]
+            - generic [ref=f5e267]: 3 documents
+          - paragraph [ref=f5e268]: Add or remove anything and the agent re-reads everything from scratch — a removed document takes what it taught with it.
+          - list [ref=f5e269]:
+            - listitem [ref=f5e270]:
+              - generic [ref=f5e271]:
+                - generic [ref=f5e272]:
+                  - generic [ref=f5e273]: Example Domain
+                  - generic [ref=f5e274]: Website
+                - generic [ref=f5e275]: Example Domain Example Domain This domain is for use in documentation examples without needing permission. Avoid use in operations. Learn mo…
+              - button "Remove" [ref=f5e276]
+            - listitem [ref=f5e277]:
+              - generic [ref=f5e278]:
+                - generic [ref=f5e279]: prices.md
+                - generic [ref=f5e281]: "# Nolte & Sons Plumbing — price list 2026 Nolte & Sons Plumbing is a family-run residential plumbing business. | Service | Price | | --- |…"
+              - button "Remove" [ref=f5e282]
+            - listitem [ref=f5e283]:
+              - generic [ref=f5e284]:
+                - generic [ref=f5e285]: handbook.txt
+                - generic [ref=f5e287]: New employee handbook — Nolte & Sons Plumbing About us Nolte & Sons Plumbing is a family-run residential plumbing business, trading since 1…
+              - button "Remove" [ref=f5e288]
+          - generic [ref=f5e289]:
+            - button "Choose File" [ref=f5e290]
+            - button "Add a document" [ref=f5e291]
+            - paragraph [ref=f5e292]: PDF, Word, Excel, PowerPoint, text, markdown, CSV or HTML. Up to 2 MB each.
+  - button "Open Next.js Dev Tools" [ref=f5e23] [cursor=pointer]
+  - alert [ref=f5e27]

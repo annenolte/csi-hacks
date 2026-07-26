@@ -1,0 +1,5 @@
+[     421ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.merlin.computer/login:0
+[     481ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.merlin.computer/site.webmanifest:0
+[     481ms] [ERROR] Manifest fetch from https://www.merlin.computer/site.webmanifest failed, code 404 @ https://www.merlin.computer/login:0
+[    1149ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.merlin.computer/site.webmanifest:0
+[    1149ms] [ERROR] Manifest fetch from https://www.merlin.computer/site.webmanifest failed, code 404 @ https://www.merlin.computer/login:0

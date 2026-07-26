@@ -1,0 +1,44 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e3]:
+    - banner [ref=f2e4]:
+      - link "Frontdesk" [ref=f2e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f2e6]: ✂
+      - generic [ref=f2e27]: Nolte & Sons Plumbing
+    - generic [ref=f2e8]:
+      - generic [ref=f2e28]:
+        - generic [ref=f2e29]: ✂
+        - paragraph [ref=f2e30]: Nolte & Sons Plumbing is set up, and I'll be the one configuring the agent that answers your calls — this won't take long. Pick your trade from the cards below so I know which set of questions to run.
+      - list [ref=f2e31]:
+        - listitem [ref=f2e32]:
+          - button "Plumbing Drains, leaks, water heaters, fixtures." [ref=f2e33]:
+            - generic [ref=f2e34]: 🔧
+            - generic [ref=f2e35]:
+              - generic [ref=f2e36]: Plumbing
+              - generic [ref=f2e38]: Drains, leaks, water heaters, fixtures.
+        - listitem [ref=f2e39]:
+          - button "Electrical Soon Faults, rewires, panels, EV chargers." [disabled] [ref=f2e40]:
+            - generic [ref=f2e41]: ⚡
+            - generic [ref=f2e42]:
+              - generic [ref=f2e43]:
+                - generic [ref=f2e44]: Electrical
+                - generic [ref=f2e45]: Soon
+              - generic [ref=f2e46]: Faults, rewires, panels, EV chargers.
+        - listitem [ref=f2e47]:
+          - button "Heating & cooling Soon Furnaces, heat pumps, servicing." [disabled] [ref=f2e48]:
+            - generic [ref=f2e49]: 🌡️
+            - generic [ref=f2e50]:
+              - generic [ref=f2e51]:
+                - generic [ref=f2e52]: Heating & cooling
+                - generic [ref=f2e53]: Soon
+              - generic [ref=f2e54]: Furnaces, heat pumps, servicing.
+        - listitem [ref=f2e55]:
+          - button "Locksmith Soon Lockouts, rekeys, hardware." [disabled] [ref=f2e56]:
+            - generic [ref=f2e57]: 🔑
+            - generic [ref=f2e58]:
+              - generic [ref=f2e59]:
+                - generic [ref=f2e60]: Locksmith
+                - generic [ref=f2e61]: Soon
+              - generic [ref=f2e62]: Lockouts, rekeys, hardware.
+  - button "Open Next.js Dev Tools" [ref=f2e22] [cursor=pointer]
+  - alert [ref=f2e26]

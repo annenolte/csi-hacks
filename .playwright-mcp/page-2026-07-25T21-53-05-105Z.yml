@@ -1,0 +1,155 @@
+- generic [ref=f5e1]:
+  - generic [ref=f5e3]:
+    - banner [ref=f5e4]:
+      - generic [ref=f5e5]:
+        - link "Frontdesk" [ref=f5e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f5e7]: ✂
+        - paragraph [ref=f5e28]: Nolte & Sons Plumbing · Plumbing
+      - button "Sign out" [ref=f5e9]
+    - navigation "Dashboard sections" [ref=f5e10]:
+      - list [ref=f5e11]:
+        - listitem [ref=f5e12]:
+          - button "Overview" [ref=f5e13]
+        - listitem [ref=f5e14]:
+          - button "What it knows" [active] [ref=f5e15]
+    - main [ref=f5e16]:
+      - generic [ref=f5e75]:
+        - paragraph [ref=f5e77]:
+          - strong [ref=f5e78]: 1 thing your documents disagree about.
+          - text: The agent won't state any of them until you pick.
+        - generic [ref=f5e79]:
+          - generic [ref=f5e80]:
+            - heading "What your agent says" [level=2] [ref=f5e81]
+            - paragraph [ref=f5e82]: Change anything here and the agent uses it on the very next call.
+          - list [ref=f5e83]:
+            - listitem [ref=f5e84]:
+              - generic [ref=f5e90]:
+                - generic [ref=f5e91]:
+                  - heading "Business name" [level=3] [ref=f5e92]
+                  - button "Change" [ref=f5e93]
+                - paragraph [ref=f5e94]: Nolte & Sons Plumbing
+                - paragraph [ref=f5e95]:
+                  - generic [ref=f5e96]: Read from your documents
+                  - generic [ref=f5e97]: “Nolte & Sons Plumbing is a family-run residential plumbing business, trading since 1994.”
+            - listitem [ref=f5e98]:
+              - generic [ref=f5e104]:
+                - generic [ref=f5e105]:
+                  - heading "Business phone" [level=3] [ref=f5e106]
+                  - button "Change" [ref=f5e107]
+                - paragraph [ref=f5e108]: (503) 555-0142
+                - paragraph [ref=f5e109]:
+                  - generic [ref=f5e110]: Read from your documents
+                  - generic [ref=f5e111]: “Our main line is (503) 555-0142.”
+            - listitem [ref=f5e112]:
+              - generic [ref=f5e118]:
+                - generic [ref=f5e119]:
+                  - heading "Service area" [level=3] [ref=f5e120]
+                  - button "Change" [ref=f5e121]
+                - paragraph [ref=f5e122]: Portland, Beaverton, Tigard, Lake Oswego
+                - paragraph [ref=f5e123]:
+                  - generic [ref=f5e124]: Read from your documents
+                  - generic [ref=f5e125]: “Portland, Beaverton, Tigard and Lake Oswego. We do not travel past Hillsboro.”
+            - listitem [ref=f5e126]:
+              - generic [ref=f5e132]:
+                - generic [ref=f5e133]:
+                  - heading "Opening hours" [level=3] [ref=f5e134]
+                  - button "Change" [ref=f5e135]
+                - paragraph [ref=f5e136]: Mon–Fri 8am–5pm, Sat 9am–1pm
+                - paragraph [ref=f5e137]:
+                  - generic [ref=f5e138]: Read from your documents
+                  - generic [ref=f5e139]: “We are open Monday to Friday, 8:00am to 5:00pm. Saturdays 9:00am to 1:00pm. Closed Sunday.”
+            - listitem [ref=f5e140]:
+              - generic [ref=f5e146]:
+                - generic [ref=f5e147]:
+                  - heading "After hours" [level=3] [ref=f5e148]
+                  - button "Change" [ref=f5e149]
+                - paragraph [ref=f5e150]: Yes, any time
+                - paragraph [ref=f5e151]:
+                  - generic [ref=f5e152]: Read from your documents
+                  - generic [ref=f5e153]: “We take emergency call-outs at any time, day or night.”
+            - listitem [ref=f5e154]:
+              - generic [ref=f5e160]:
+                - generic [ref=f5e161]:
+                  - heading "What you do" [level=3] [ref=f5e162]
+                  - button "Change" [ref=f5e163]
+                - paragraph [ref=f5e164]: Drain clearing, Leak repair, Water heater repair or swap, Fixture install, Toilet repair, Sewer line, Repipe, Emergency call-out
+                - paragraph [ref=f5e165]:
+                  - generic [ref=f5e166]: Read from your documents
+                  - generic [ref=f5e167]: “Drain clearing, leak repair, water heater repair and replacement, fixture installs, toilet repair, sewer line work and …”
+            - listitem [ref=f5e168]:
+              - generic [ref=f5e174]:
+                - generic [ref=f5e175]:
+                  - heading "What you actually do" [level=3] [ref=f5e176]
+                  - button "Change" [ref=f5e177]
+                - paragraph [ref=f5e178]: Family-run residential plumbing since 1994. No gas fitting, and commercial jobs go to Dave at Riverside Mechanical.
+                - paragraph [ref=f5e179]:
+                  - generic [ref=f5e180]: You set this
+                - generic [ref=f5e181]:
+                  - paragraph [ref=f5e182]: "Your documents say two different things:"
+                  - list [ref=f5e183]:
+                    - listitem [ref=f5e184]:
+                      - button "Family-run residential plumbing business, trading since 1994. Does not do gas fitting; commercial work is referred to Dave at Riverside Mechanical. Does not travel past Hillsboro." [ref=f5e185]
+                      - generic [ref=f5e186]: handbook.txt
+                    - listitem [ref=f5e187]:
+                      - button "Family-run residential plumbing business." [ref=f5e188]
+                      - generic [ref=f5e189]: prices.md
+        - generic [ref=f5e190]:
+          - heading "Asked during setup" [level=2] [ref=f5e191]
+          - paragraph [ref=f5e192]: Things the agent thought to ask about your business specifically.
+          - generic [ref=f5e193]:
+            - generic [ref=f5e194]:
+              - term [ref=f5e195]: What do you charge for an after-hours call-out, and is it a separate fee on top of the work?
+              - definition [ref=f5e196]: $95 call-out fee after hours, on top of the job price.
+            - generic [ref=f5e197]:
+              - term [ref=f5e198]: Should the agent book jobs straight into your schedule, or just take details and have you call back?
+              - definition [ref=f5e199]: Book the job directly
+        - generic [ref=f5e200]:
+          - generic [ref=f5e201]:
+            - heading "Prices" [level=2] [ref=f5e202]
+            - paragraph [ref=f5e203]: What the agent may say out loud about each one. Some jobs are always yours to quote no matter what a document claims — a sewer line quoted over the phone is how you lose money on it.
+          - list [ref=f5e204]:
+            - listitem [ref=f5e205]:
+              - generic [ref=f5e206]:
+                - generic [ref=f5e207]: Drain clearing
+                - generic [ref=f5e208]: Can quote
+              - paragraph [ref=f5e209]: $149 flat
+              - paragraph [ref=f5e210]: The agent will say this number. It's a single flat price.
+              - paragraph [ref=f5e211]: “| Drain clearing | $149 flat |” — prices.md
+            - listitem [ref=f5e212]:
+              - generic [ref=f5e213]:
+                - generic [ref=f5e214]: Toilet repair
+                - generic [ref=f5e215]: Can quote
+              - paragraph [ref=f5e216]: $129
+              - paragraph [ref=f5e217]: The agent will say this number. It's a single flat price.
+              - paragraph [ref=f5e218]: “| Toilet repair | $129 |” — prices.md
+            - listitem [ref=f5e219]:
+              - generic [ref=f5e220]:
+                - generic [ref=f5e221]: Water heater repair or swap
+                - generic [ref=f5e222]: Rough only
+              - paragraph [ref=f5e223]: starting at $320
+              - paragraph [ref=f5e224]: The agent gives a range and won't commit to a total. It's open-ended wording.
+              - paragraph [ref=f5e225]: “| Water heater repair | starting at $320 |” — prices.md
+            - listitem [ref=f5e226]:
+              - generic [ref=f5e227]:
+                - generic [ref=f5e228]: Leak repair
+                - generic [ref=f5e229]: Rough only
+              - paragraph [ref=f5e230]: $95 per hour
+              - paragraph [ref=f5e231]: The agent gives a range and won't commit to a total. It's a rate, not a job price.
+              - paragraph [ref=f5e232]: “| Leak detection | $95 per hour |” — prices.md
+            - listitem [ref=f5e233]:
+              - generic [ref=f5e234]:
+                - generic [ref=f5e235]: Sewer line
+                - generic [ref=f5e236]: You take it
+              - paragraph [ref=f5e237]: flat $4,000
+              - paragraph [ref=f5e238]: The agent won't quote at all and hands the call to you. It's sewer_line is always quoted by a person for this trade.
+              - paragraph [ref=f5e239]: “| Sewer line replacement | flat $4,000 |” — prices.md
+            - listitem [ref=f5e240]:
+              - generic [ref=f5e241]:
+                - generic [ref=f5e242]: Emergency call-out
+                - generic [ref=f5e243]: You take it
+              - paragraph [ref=f5e244]: an additional $95 call-out fee
+              - paragraph [ref=f5e245]: The agent won't quote at all and hands the call to you. It's price wording not recognised.
+              - paragraph [ref=f5e246]: “Emergency call-outs are available 24/7 for an additional $95 call-out fee.” — prices.md
+  - button "Open Next.js Dev Tools" [ref=f5e23] [cursor=pointer]
+  - alert [ref=f5e27]

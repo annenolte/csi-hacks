@@ -1,0 +1,29 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e3]:
+    - banner [ref=f3e4]:
+      - link "Frontdesk" [ref=f3e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f3e6]: ✂
+      - generic [ref=f3e17]: Savior Plumbing
+    - generic [ref=f3e8]:
+      - generic [ref=f3e18]:
+        - generic [ref=f3e19]: ✂
+        - paragraph [ref=f3e20]: I'm the specialist who'll get your phone agent set up, and I'll keep it quick. Pick your trade from the cards below to get started — plumbing is the only one live right now.
+      - paragraph [ref=f3e64]: Plumbing
+      - generic [ref=f3e65]:
+        - generic [ref=f3e66]: ✂
+        - paragraph [ref=f3e67]: Plumbing it is. Easiest starting point is your website — I'll read it myself and pull out your services, areas and hours instead of making you type all that out. Drop the address in below, and if you don't have a site there's an option to say so.
+      - paragraph [ref=f3e73]: saviorplumbing.com
+      - generic [ref=f3e82]:
+        - generic [ref=f3e83]: ✂
+        - paragraph [ref=f3e84]: "Read it. Got 7 things off it. Now the more useful part: what would you hand a new employee on their first day? A price list, notes on where you'll travel, an induction sheet."
+      - generic [ref=f3e85]:
+        - generic [ref=f3e86] [cursor=pointer]:
+          - button "Drop files here, or click to choose Price lists, service notes, induction sheets. PDF, Word, Excel, PowerPoint, text, markdown, CSV or HTML. Up to 2 MB each." [ref=f3e87]
+          - generic [ref=f3e88]: Drop files here, or click to choose
+          - generic [ref=f3e89]: Price lists, service notes, induction sheets. PDF, Word, Excel, PowerPoint, text, markdown, CSV or HTML. Up to 2 MB each.
+        - generic [ref=f3e90]:
+          - button "Read them" [disabled]
+          - button "Nothing to add" [ref=f3e91]
+  - button "Open Next.js Dev Tools" [ref=f3e58] [cursor=pointer]
+  - alert [ref=f3e62]

@@ -1,0 +1,8 @@
+- generic [active] [ref=f7e1]:
+  - generic [ref=f7e3]:
+    - banner [ref=f7e4]:
+      - link "Frontdesk" [ref=f7e6] [cursor=pointer]:
+        - /url: /
+    - generic [ref=f7e15]: Getting started
+  - button "Open Next.js Dev Tools" [ref=f7e35] [cursor=pointer]
+  - alert [ref=f7e39]

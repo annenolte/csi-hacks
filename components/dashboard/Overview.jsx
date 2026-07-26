@@ -2,6 +2,8 @@
 
 import { useRef, useState } from "react";
 import { Button } from "../ui";
+import { readFiles } from "@/lib/documents/read";
+import { ACCEPT, ACCEPT_SUMMARY, extensionOf } from "@/lib/documents/formats";
 
 /* The payoff screen: the number, the calendar, and what the agent has read. */
 export default function Overview({ data, notice, onRefresh }) {
@@ -57,22 +59,32 @@ function PhoneCard({ business }) {
     );
   }
 
+  /*
+    The number is the thing the whole product hands over, so it gets the
+    landing page's hero treatment rather than a card like the others: the
+    dotted graph paper behind it, and the number set in display type at a size
+    nothing else on the screen competes with.
+  */
   return (
-    <Card className="text-center">
-      <p className="text-[12.5px] uppercase tracking-[0.08em] text-muted">
-        Your agent&apos;s number
-      </p>
-      <p className="display mt-2 text-[36px] sm:text-[46px]">{business.phoneNumber}</p>
-      <p className="mx-auto mt-3 max-w-[42ch] text-[13.5px] leading-relaxed text-muted">
-        Give this to customers. It isn&apos;t connected to a carrier in this
-        prototype, so it won&apos;t actually ring.
-      </p>
-      <div className="mt-5">
-        <Button variant="secondary" onClick={copy}>
-          {copied ? "Copied" : "Copy number"}
-        </Button>
+    <section className="dot-grid overflow-hidden rounded-[var(--radius-card)] border border-line shadow-lift">
+      <div className="bg-paper/60 px-6 py-10 text-center sm:py-12">
+        <p className="text-[11.5px] uppercase tracking-[0.1em] text-muted">
+          Your agent&apos;s number
+        </p>
+        <p className="display mt-3 text-[38px] font-normal tracking-[-0.04em] sm:text-[58px]">
+          {business.phoneNumber}
+        </p>
+        <p className="mx-auto mt-4 max-w-[42ch] text-[13.5px] leading-relaxed text-muted">
+          Give this to customers. It isn&apos;t connected to a carrier in this
+          prototype, so it won&apos;t actually ring.
+        </p>
+        <div className="mt-6">
+          <Button variant="secondary" onClick={copy}>
+            {copied ? "Copied" : "Copy number"}
+          </Button>
+        </div>
       </div>
-    </Card>
+    </section>
   );
 }
 
@@ -146,34 +158,41 @@ function CalendarCard({ calendar, notice, onRefresh }) {
   );
 }
 
-const MAX_DOC_BYTES = 2 * 1024 * 1024;
-
 function DocumentsCard({ documents, onRefresh }) {
   const input = useRef(null);
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState(null);
+  const [stage, setStage] = useState(null);
+  const [errors, setErrors] = useState([]);
   const [result, setResult] = useState(null);
 
   async function add(fileList) {
-    setError(null);
-    setResult(null);
+    if (!Array.from(fileList ?? []).length) return;
 
-    const accepted = [];
-    for (const file of Array.from(fileList ?? [])) {
-      if (!/\.(txt|md|markdown|csv)$/i.test(file.name)) {
-        setError(`${file.name} isn't a text file. Plain text, markdown or CSV.`);
-        continue;
+    setErrors([]);
+    setResult(null);
+    setBusy(true);
+    setStage("Reading the files…");
+
+    /*
+      Two waits, and they're worth naming separately: turning a PDF into text,
+      then re-reading the whole corpus. Both are slow enough that a single
+      unlabelled spinner looks stuck.
+    */
+    let accepted = [];
+    try {
+      const { documents: read, errors: problems } = await readFiles(fileList);
+      accepted = read;
+      if (problems.length) setErrors(problems);
+    } finally {
+      if (!accepted.length) {
+        setBusy(false);
+        setStage(null);
       }
-      if (file.size > MAX_DOC_BYTES) {
-        setError(`${file.name} is too big — 2 MB is the limit.`);
-        continue;
-      }
-      accepted.push({ name: file.name, text: await file.text() });
     }
 
     if (!accepted.length) return;
 
-    setBusy(true);
+    setStage("Re-reading everything…");
     try {
       const response = await fetch("/api/dashboard/documents", {
         method: "POST",
@@ -181,7 +200,7 @@ function DocumentsCard({ documents, onRefresh }) {
         body: JSON.stringify({ documents: accepted }),
       });
       const data = await response.json();
-      if (!response.ok) setError(data.error ?? "Couldn't add that.");
+      if (!response.ok) setErrors((current) => [...current, data.error ?? "Couldn't add that."]);
       else {
         setResult(
           data.failure
@@ -193,15 +212,17 @@ function DocumentsCard({ documents, onRefresh }) {
         onRefresh();
       }
     } catch {
-      setError("Couldn't reach the server.");
+      setErrors((current) => [...current, "Couldn't reach the server."]);
     } finally {
       setBusy(false);
+      setStage(null);
     }
   }
 
   async function remove(id) {
     setBusy(true);
-    setError(null);
+    setStage("Re-reading everything…");
+    setErrors([]);
     setResult(null);
     try {
       const response = await fetch(`/api/dashboard/documents?id=${encodeURIComponent(id)}`, {
@@ -209,13 +230,14 @@ function DocumentsCard({ documents, onRefresh }) {
       });
       if (!response.ok) {
         const data = await response.json().catch(() => ({}));
-        setError(data.error ?? "Couldn't remove that.");
+        setErrors([data.error ?? "Couldn't remove that."]);
       } else {
         setResult("Removed, and everything else re-read.");
         onRefresh();
       }
     } finally {
       setBusy(false);
+      setStage(null);
     }
   }
 
@@ -239,6 +261,19 @@ function DocumentsCard({ documents, onRefresh }) {
         <ul className="mt-4 divide-y divide-line rounded-[var(--radius-inner)] border border-line">
           {documents.map((doc) => (
             <li key={doc.id} className="flex items-start gap-3 px-3.5 py-3">
+              {/*
+                The same badge the upload cards use in onboarding, so a document
+                looks like itself on both screens. A scraped page has no
+                extension to show, so it says what it is instead.
+              */}
+              <span
+                aria-hidden="true"
+                className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-canvas text-[9.5px] font-semibold tracking-[0.02em] text-muted"
+              >
+                {doc.kind === "url"
+                  ? "WEB"
+                  : (extensionOf(doc.name).toUpperCase() || "FILE").slice(0, 4)}
+              </span>
               <span className="min-w-0 flex-1">
                 <span className="flex items-center gap-2">
                   <span className="truncate text-[14px] font-medium text-ink">
@@ -260,7 +295,7 @@ function DocumentsCard({ documents, onRefresh }) {
                 type="button"
                 onClick={() => remove(doc.id)}
                 disabled={busy}
-                className="shrink-0 text-[12.5px] font-medium text-muted hover:text-flag disabled:opacity-40"
+                className="mt-0.5 shrink-0 text-[12.5px] font-medium text-muted hover:text-flag disabled:opacity-40"
               >
                 Remove
               </button>
@@ -269,10 +304,14 @@ function DocumentsCard({ documents, onRefresh }) {
         </ul>
       )}
 
-      {error && (
-        <p role="alert" className="mt-3 text-[13px] text-flag">
-          {error}
-        </p>
+      {errors.length > 0 && (
+        <ul role="alert" className="mt-3 space-y-1">
+          {errors.map((message, i) => (
+            <li key={i} className="text-[13px] text-flag">
+              {message}
+            </li>
+          ))}
+        </ul>
       )}
       {result && (
         <p role="status" className="mt-3 text-[13px] text-muted">
@@ -285,7 +324,7 @@ function DocumentsCard({ documents, onRefresh }) {
           ref={input}
           type="file"
           multiple
-          accept=".txt,.md,.markdown,.csv"
+          accept={ACCEPT}
           className="sr-only"
           onChange={(e) => {
             add(e.target.files);
@@ -297,8 +336,9 @@ function DocumentsCard({ documents, onRefresh }) {
           onClick={() => input.current?.click()}
           disabled={busy}
         >
-          {busy ? "Re-reading everything…" : "Add a document"}
+          {busy ? (stage ?? "Working…") : "Add a document"}
         </Button>
+        <p className="mt-2 text-[12.5px] text-faint">{ACCEPT_SUMMARY}</p>
       </div>
     </Card>
   );

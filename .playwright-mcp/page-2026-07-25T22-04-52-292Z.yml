@@ -1,0 +1,62 @@
+- generic [active] [ref=f20e1]:
+  - generic [ref=f20e3]:
+    - banner [ref=f20e4]:
+      - generic [ref=f20e5]:
+        - link "Frontdesk" [ref=f20e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f20e7]: ✂
+        - paragraph [ref=f20e9]: Nolte & Sons Plumbing · Plumbing
+      - button "Sign out" [ref=f20e10]
+    - navigation "Dashboard sections" [ref=f20e11]:
+      - list [ref=f20e12]:
+        - listitem [ref=f20e13]:
+          - button "Overview" [ref=f20e14]
+        - listitem [ref=f20e15]:
+          - button "What it knows" [ref=f20e16]
+    - main [ref=f20e17]:
+      - generic [ref=f20e18]:
+        - generic [ref=f20e19]:
+          - paragraph [ref=f20e20]: Your agent's number
+          - paragraph [ref=f20e21]: (512) 555-0145
+          - paragraph [ref=f20e22]: Give this to customers. It isn't connected to a carrier in this prototype, so it won't actually ring.
+          - button "Copy number" [ref=f20e24]
+        - generic [ref=f20e25]:
+          - generic [ref=f20e26]:
+            - heading "Calendar" [level=2] [ref=f20e27]
+            - generic [ref=f20e28]: Not connected
+          - paragraph [ref=f20e29]: Connect Google Calendar so the agent can offer real open slots and put jobs straight into your diary.
+          - link [ref=f20e31] [cursor=pointer]:
+            - /url: /api/calendar/google/start
+            - button "Connect Google Calendar" [ref=f20e32]
+        - generic [ref=f20e35]:
+          - generic [ref=f20e36]:
+            - heading "What the agent has read" [level=2] [ref=f20e37]
+            - generic [ref=f20e38]: 3 documents
+          - paragraph [ref=f20e39]: Add or remove anything and the agent re-reads everything from scratch — a removed document takes what it taught with it.
+          - list [ref=f20e40]:
+            - listitem [ref=f20e41]:
+              - generic [ref=f20e42]: MD
+              - generic [ref=f20e43]:
+                - generic [ref=f20e44]: prices.md
+                - generic [ref=f20e46]: "# Nolte & Sons Plumbing — price list 2026 Nolte & Sons Plumbing is a family-run residential plumbing business. | Service | Price | | --- |…"
+              - button "Remove" [disabled] [ref=f20e47]
+            - listitem [ref=f20e48]:
+              - generic [ref=f20e49]: TXT
+              - generic [ref=f20e50]:
+                - generic [ref=f20e51]: handbook.txt
+                - generic [ref=f20e53]: New employee handbook — Nolte & Sons Plumbing About us Nolte & Sons Plumbing is a family-run residential plumbing business, trading since 1…
+              - button "Remove" [disabled] [ref=f20e54]
+            - listitem [ref=f20e55]:
+              - generic [ref=f20e56]: TXT
+              - generic [ref=f20e57]:
+                - generic [ref=f20e58]: job-notes.txt
+                - generic [ref=f20e60]: "Nolte & Sons Plumbing — job notes archive Job 1: drain clearing at a residential address in Beaverton. Technician notes: cleared blockage,…"
+              - button "Remove" [disabled] [ref=f20e61]
+          - alert [ref=f20e76]:
+            - listitem [ref=f20e77]: "scan.doc: Word 97–2003 files can't be read directly. Open it and save as .docx."
+          - generic [ref=f20e62]:
+            - button "Choose File" [ref=f20e63]
+            - button "Re-reading everything…" [disabled]
+            - paragraph [ref=f20e65]: PDF, Word, Excel, PowerPoint, text, markdown, CSV or HTML. Up to 2 MB each.
+  - button "Open Next.js Dev Tools" [ref=f20e71] [cursor=pointer]
+  - alert [ref=f20e75]

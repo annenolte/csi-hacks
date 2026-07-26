@@ -1,0 +1,31 @@
+- generic [active] [ref=f5e1]:
+  - generic [ref=f5e3]:
+    - link "Frontdesk" [ref=f5e4] [cursor=pointer]:
+      - /url: /
+    - generic [ref=f5e13]:
+      - generic [ref=f5e14]:
+        - heading "Welcome back. It kept reading." [level=1] [ref=f5e15]:
+          - generic [ref=f5e16]: Welcome back.
+          - generic [ref=f5e17]: It kept reading.
+        - paragraph [ref=f5e18]: Everything Frontdesk read for you is still there — the number, the calendar, and every fact with the sentence it came from.
+        - paragraph [ref=f5e19]:
+          - link "← Back to the site ← Back to the site" [ref=f5e20] [cursor=pointer]:
+            - /url: /
+      - generic [ref=f5e22]:
+        - generic [ref=f5e23]:
+          - heading "Sign in" [level=2] [ref=f5e24]
+          - generic [ref=f5e25]:
+            - generic [ref=f5e26]:
+              - generic [ref=f5e27]:
+                - generic [ref=f5e28]: Email
+                - textbox "Email" [ref=f5e29]
+              - generic [ref=f5e30]:
+                - generic [ref=f5e31]: Password
+                - textbox "Password" [ref=f5e32]
+            - button "Sign in" [ref=f5e33]
+        - paragraph [ref=f5e38]:
+          - text: No account yet?
+          - link "Create one Create one" [ref=f5e40] [cursor=pointer]:
+            - /url: /signup
+  - button "Open Next.js Dev Tools" [ref=f5e47] [cursor=pointer]
+  - alert [ref=f5e51]

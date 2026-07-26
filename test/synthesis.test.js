@@ -211,6 +211,144 @@ describe("buildReport", () => {
 });
 
 /*
+  Telling someone their documents say two different things, and then showing them
+  the same answer twice, makes the extraction look broken and costs them a
+  question they had no reason to be asked. Agreement is the common case — a price
+  list and an FAQ that both name the business — so it has to survive the round
+  trip through two documents without turning into an argument.
+*/
+describe("a restated answer is not a disagreement", () => {
+  const stated = (value, confidence, document) => ({
+    value,
+    confidence,
+    source: `stated in ${document}`,
+    document,
+  });
+
+  const reportFor = (values) =>
+    buildReport({ trade: PLUMBING, fields: { business_name: values }, prices: [] });
+
+  it("collapses two documents that say the same thing", () => {
+    const report = reportFor([
+      stated("Nolte & Sons", 0.8, "faq.md"),
+      stated("Nolte & Sons", 0.95, "prices.txt"),
+    ]);
+
+    expect(report.conflicts).toEqual([]);
+    expect(report.facts).toHaveLength(1);
+    expect(report.facts[0].conflicted).toBe(false);
+    /* The better-supported statement is the one worth quoting. */
+    expect(report.facts[0].document).toBe("prices.txt");
+  });
+
+  it("ignores the differences documents are allowed to have", () => {
+    for (const [a, b] of [
+      ["Nolte & Sons", "  Nolte & Sons  "],
+      ["Nolte & Sons", "nolte & sons"],
+      ["Nolte & Sons", "Nolte & Sons."],
+      ["Nolte  &   Sons", "Nolte & Sons"],
+    ]) {
+      const report = reportFor([stated(a, 0.9, "a.md"), stated(b, 0.8, "b.md")]);
+      expect(report.conflicts, `${a} vs ${b}`).toEqual([]);
+    }
+  });
+
+  it("still keeps a real difference in wording", () => {
+    /* The qualifier is the whole answer here — these are not the same hours. */
+    const report = reportFor([
+      stated("Nolte & Sons", 0.9, "a.md"),
+      stated("Nolte & Sons Plumbing", 0.9, "b.md"),
+    ]);
+
+    expect(report.conflicts).toHaveLength(1);
+    expect(report.conflicts[0].values).toHaveLength(2);
+  });
+
+  /*
+    The mirror of "list fields can't conflict". A handbook that describes the
+    business over a page and a price list that describes it in a line have not
+    contradicted each other — one said more, and "which of these is right?" is a
+    question with no answer.
+  */
+  it("keeps the fuller description rather than calling prose a disagreement", () => {
+    const report = buildReport({
+      trade: PLUMBING,
+      prices: [],
+      fields: {
+        business_notes: [
+          stated("Family-run residential plumbing business.", 0.9, "prices.md"),
+          stated(
+            "Family-run residential plumbing business since 1994. No gas fitting; commercial goes to Dave.",
+            0.88,
+            "handbook.txt",
+          ),
+        ],
+      },
+    });
+
+    expect(report.conflicts).toEqual([]);
+    expect(report.facts).toHaveLength(1);
+    expect(report.facts[0].value).toContain("No gas fitting");
+    /* Both sentences still stand behind it. */
+    expect(report.facts[0].sources).toHaveLength(2);
+  });
+
+  it("still prefers a clearly better-supported description", () => {
+    const report = buildReport({
+      trade: PLUMBING,
+      prices: [],
+      fields: {
+        business_notes: [
+          stated("Residential plumbing, no gas work.", 0.95, "handbook.txt"),
+          stated("A much longer but barely-supported ramble about the business.", 0.4, "old.txt"),
+        ],
+      },
+    });
+
+    expect(report.facts[0].value).toBe("Residential plumbing, no gas work.");
+  });
+
+  it("reads a list as a set, and an object by its parts", () => {
+    const area = (value, doc) => ({ value, confidence: 0.9, source: "s", document: doc });
+    const sameList = buildReport({
+      trade: PLUMBING,
+      prices: [],
+      fields: {
+        service_area: [
+          area(["Portland", "Beaverton"], "a.md"),
+          area(["beaverton", "portland"], "b.md"),
+        ],
+      },
+    });
+    expect(sameList.conflicts).toEqual([]);
+
+    const sameHours = buildReport({
+      trade: PLUMBING,
+      prices: [],
+      fields: {
+        hours: [
+          area({ mon: { open: "08:00", close: "17:00" } }, "a.md"),
+          area({ mon: { close: "17:00", open: "08:00" } }, "b.md"),
+        ],
+      },
+    });
+    expect(sameHours.conflicts).toEqual([]);
+
+    const differentHours = buildReport({
+      trade: PLUMBING,
+      prices: [],
+      fields: {
+        hours: [
+          area({ mon: { open: "08:00", close: "17:00" } }, "a.md"),
+          area({ mon: { open: "07:00", close: "18:00" } }, "b.md"),
+        ],
+      },
+    });
+    expect(differentHours.conflicts).toHaveLength(1);
+  });
+});
+
+/*
   Answers arrive as JSON over HTTP. The UI can't produce a bad one — a choice
   renders as buttons — but "the client wouldn't send that" is not a check, and
   everything downstream (the dashboard, the next turn's prompt, the brief a voice

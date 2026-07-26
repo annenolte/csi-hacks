@@ -1,0 +1,23 @@
+- generic [ref=f6e1]:
+  - generic [ref=f6e3]:
+    - banner [ref=f6e4]:
+      - link "Frontdesk" [ref=f6e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f6e6]: ✂
+      - generic [ref=f6e17]: Savior Plumbing
+    - generic [ref=f6e8]:
+      - generic [ref=f6e18]:
+        - generic [ref=f6e19]: ✂
+        - paragraph [ref=f6e20]: I'm the specialist who'll get your phone agent set up, and I'll keep this quick. First thing I need is your trade — pick it from the cards below. Plumbing is the only one live right now, so if that's not you, we're not ready for you yet.
+      - paragraph [ref=f6e64]: Plumbing
+      - generic [ref=f6e65]:
+        - generic [ref=f6e66]: ✂
+        - paragraph [ref=f6e67]: Plumbing it is. Before I ask you anything else, I'd rather just read your website and pull the basics from there than have you retype what's already published. Drop the address in below — and if Savior Plumbing doesn't have a site, there's an option to say so and we'll do it the manual way.
+      - generic [ref=f6e68]:
+        - generic [ref=f6e69]:
+          - textbox "Website address" [active] [ref=f6e70]:
+            - /placeholder: yourbusiness.com
+          - button "Read it" [disabled]
+        - button "We don't have a website" [ref=f6e71]
+  - button "Open Next.js Dev Tools" [ref=f6e58] [cursor=pointer]
+  - alert [ref=f6e62]

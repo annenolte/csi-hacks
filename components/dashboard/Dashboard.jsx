@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import Wordmark from "../Wordmark";
+import AppHeader, { SignOutButton } from "../AppHeader";
 import Overview from "./Overview";
 import Knowledge from "./Knowledge";
 
@@ -70,24 +70,30 @@ export default function Dashboard() {
     <div className="relative min-h-dvh">
       <div
         aria-hidden="true"
-        className="mesh-top pointer-events-none absolute inset-x-0 top-0 h-[220px] opacity-60"
+        className="mesh-top pointer-events-none absolute inset-x-0 top-0 h-[280px]"
       />
 
-      <div className="relative mx-auto w-full max-w-3xl px-5 py-7 sm:px-6 sm:py-10">
-        <Header business={data?.business} />
+      <div className="relative mx-auto w-full max-w-4xl px-5 py-7 sm:px-6 sm:py-10">
+        <AppHeader business={data?.business} action={<SignOutButton />} />
 
-        <nav aria-label="Dashboard sections" className="mt-8">
-          <ol className="inline-flex items-center gap-1 rounded-full bg-canvas/80 p-1 backdrop-blur-sm">
+        {/*
+          The same pill geometry as the landing page's nav, at the size a tab
+          wants: ink-filled for the section you are in, nothing at all for the
+          one you aren't. The rail is translucent over the mesh rather than
+          solid, so the gradient carries through the top of every screen.
+        */}
+        <nav aria-label="Dashboard sections" className="mt-9">
+          <ol className="inline-flex items-center gap-1 rounded-full border border-line bg-paper/60 p-1 backdrop-blur-md">
             {TABS.map((item) => (
               <li key={item.id}>
                 <button
                   type="button"
                   onClick={() => setTab(item.id)}
                   aria-current={tab === item.id ? "page" : undefined}
-                  className={`rounded-full px-4 py-1.5 text-[13.5px] font-medium transition-all ${
+                  className={`rounded-full px-5 py-2 text-[14px] font-medium transition-all duration-200 ${
                     tab === item.id
-                      ? "bg-paper text-ink shadow-lift"
-                      : "text-ink-soft hover:bg-paper/70"
+                      ? "bg-ink text-white shadow-lift"
+                      : "text-ink-soft hover:text-ink"
                   }`}
                 >
                   {item.label}
@@ -97,8 +103,8 @@ export default function Dashboard() {
           </ol>
         </nav>
 
-        <main className="mt-7 pb-16">
-          {loading && <p className="text-[15px] text-muted">Loading…</p>}
+        <main className="mt-7 pb-20">
+          {loading && <Skeleton />}
 
           {error && (
             <div
@@ -125,38 +131,41 @@ export default function Dashboard() {
   );
 }
 
-function Header({ business }) {
-  async function signOut() {
-    await fetch("/api/auth/signout", { method: "POST" });
-    window.location.href = "/";
-  }
-
+/*
+  Cards in the shape of the ones about to replace them, rather than the word
+  "Loading". The dashboard's first paint is a fetch away on every visit, and a
+  layout that is already the right shape doesn't jump when the data lands.
+*/
+function Skeleton() {
   return (
-    <header className="flex flex-wrap items-center justify-between gap-3">
-      <div>
-        <Wordmark href="/" />
-        {business && (
-          <p className="mt-2 text-[13.5px] text-muted">
-            {business.name}
-            {business.tradeLabel ? ` · ${business.tradeLabel}` : ""}
-          </p>
-        )}
+    <div aria-hidden="true" className="space-y-5">
+      <div className="rounded-[var(--radius-card)] border border-line bg-paper p-6 shadow-lift">
+        <div className="mx-auto h-3 w-32 animate-pulse rounded-full bg-line" />
+        <div className="mx-auto mt-4 h-10 w-64 animate-pulse rounded-full bg-line" />
+        <div className="mx-auto mt-4 h-3 w-72 animate-pulse rounded-full bg-line" />
       </div>
-      <button
-        type="button"
-        onClick={signOut}
-        className="rounded-full px-3.5 py-2 text-[13.5px] font-medium text-muted transition-colors hover:bg-paper/70 hover:text-ink"
-      >
-        Sign out
-      </button>
-    </header>
+      {[0, 1].map((i) => (
+        <div
+          key={i}
+          className="rounded-[var(--radius-card)] border border-line bg-paper p-6 shadow-lift"
+        >
+          <div className="h-3.5 w-40 animate-pulse rounded-full bg-line" />
+          <div className="mt-4 h-3 w-full animate-pulse rounded-full bg-line" />
+          <div className="mt-2.5 h-3 w-2/3 animate-pulse rounded-full bg-line" />
+        </div>
+      ))}
+      <p className="sr-only" role="status">
+        Loading your dashboard.
+      </p>
+    </div>
   );
 }
 
 function ResumeBanner() {
   return (
-    <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-line bg-cream px-5 py-4">
-      <p className="text-[14px] leading-relaxed text-ink-soft">
+    <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-line bg-cream px-5 py-4 shadow-lift">
+      <p className="flex items-center gap-2.5 text-[14px] leading-relaxed text-ink-soft">
+        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-flag" />
         Setup isn&apos;t finished — your agent doesn&apos;t have a number yet.
       </p>
       <Link

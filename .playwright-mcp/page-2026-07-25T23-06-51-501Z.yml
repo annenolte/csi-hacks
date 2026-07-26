@@ -1,0 +1,23 @@
+- generic [ref=f7e1]:
+  - generic [ref=f7e3]:
+    - banner [ref=f7e4]:
+      - link "Frontdesk" [ref=f7e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f7e6]: ✂
+      - generic [ref=f7e27]: Savior Plumbing
+    - generic [ref=f7e8]:
+      - generic [ref=f7e28]:
+        - generic [ref=f7e29]: ✂
+        - paragraph [ref=f7e30]: I'm the specialist who'll get your phone agent set up, and I'll keep this quick. Pick your trade from the card below so I know which setup to run.
+      - paragraph [ref=f7e64]: Plumbing
+      - generic [ref=f7e65]:
+        - generic [ref=f7e66]: ✂
+        - paragraph [ref=f7e67]: Plumbing it is. Easiest start is for me to read your website myself rather than have you retype what's already on it — service area, hours, the work you do. Drop the address in below, and if Savior Plumbing doesn't have a site, there's an option to say so.
+      - generic [ref=f7e68]:
+        - generic [ref=f7e69]:
+          - textbox "Website address" [active] [ref=f7e70]:
+            - /placeholder: yourbusiness.com
+          - button "Read it" [disabled]
+        - button "We don't have a website" [ref=f7e71]
+  - button "Open Next.js Dev Tools" [ref=f7e22] [cursor=pointer]
+  - alert [ref=f7e26]

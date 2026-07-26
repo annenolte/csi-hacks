@@ -1,0 +1,51 @@
+- generic [ref=f10e1]:
+  - generic [ref=f10e3]:
+    - banner [ref=f10e4]:
+      - link "Frontdesk" [ref=f10e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f10e6]: ✂
+      - generic [ref=f10e27]: Nolte & Sons Plumbing
+    - generic [ref=f10e8]:
+      - generic [ref=f10e28]:
+        - generic [ref=f10e29]: ✂
+        - paragraph [ref=f10e30]: Nolte & Sons Plumbing is set up — I'm the one who'll get your phone agent answering calls properly, and it won't take long. First thing I need is your trade, so pick it from the cards below.
+      - paragraph [ref=f10e32]: Plumbing
+      - generic [ref=f10e33]:
+        - generic [ref=f10e34]: ✂
+        - paragraph [ref=f10e35]: Plumbing it is. Easiest place to start is your website — I'll read it myself and pull out the service area, hours, and what you do, so you're not retyping things you've already written once. Drop the address in below, and if Nolte & Sons doesn't have a site, there's an option to say so and we'll build it out from scratch.
+      - paragraph [ref=f10e41]: We don't have a website
+      - generic [ref=f10e42]:
+        - generic [ref=f10e43]: ✂
+        - paragraph [ref=f10e44]: "No website, no problem — we'll build it from your own material instead. Anything you'd hand a new hire on day one works: price list, service area notes, an induction sheet, whatever you've got. Plain text or markdown files, drop them in below."
+      - generic [ref=f10e45]:
+        - generic [ref=f10e46] [cursor=pointer]:
+          - button "Drop files here, or click to choose Price lists, service notes, induction sheets. PDF, Word, Excel, PowerPoint, text, markdown, CSV or HTML. Up to 2 MB each." [active] [ref=f10e47]
+          - generic [ref=f10e48]: Drop files here, or click to choose
+          - generic [ref=f10e49]: Price lists, service notes, induction sheets. PDF, Word, Excel, PowerPoint, text, markdown, CSV or HTML. Up to 2 MB each.
+        - list [ref=f10e52]:
+          - listitem [ref=f10e53]:
+            - generic [ref=f10e54]:
+              - generic [ref=f10e55]: MD
+              - generic [ref=f10e56]:
+                - generic [ref=f10e57]: prices.md
+                - generic [ref=f10e58]: 1 KB · 86 words read
+              - button "Remove prices.md" [ref=f10e60]
+          - listitem [ref=f10e63]:
+            - generic [ref=f10e64]:
+              - generic [ref=f10e65]: TXT
+              - generic [ref=f10e66]:
+                - generic [ref=f10e67]: handbook.txt
+                - generic [ref=f10e68]: 1 KB · 111 words read
+              - button "Remove handbook.txt" [ref=f10e70]
+          - listitem [ref=f10e73]:
+            - generic [ref=f10e74]:
+              - generic [ref=f10e75]: TXT
+              - generic [ref=f10e76]:
+                - generic [ref=f10e77]: job-notes.txt
+                - generic [ref=f10e78]: 125 KB · 18,887 words read
+              - button "Remove job-notes.txt" [ref=f10e80]
+        - generic [ref=f10e50]:
+          - button "Read 3 files" [ref=f10e83]
+          - button "Nothing to add" [ref=f10e51]
+  - button "Open Next.js Dev Tools" [ref=f10e22] [cursor=pointer]
+  - alert [ref=f10e26]

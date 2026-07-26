@@ -2,7 +2,10 @@ import { describe, expect, it } from "vitest";
 import { PLUMBING } from "@/lib/trades";
 import { COMPONENT, isAuto, working, needField } from "@/lib/onboarding/components";
 import { toE164, _AREA_CODES } from "@/lib/onboarding/phone";
-import { answerForFollowup, describeAnswer } from "@/lib/onboarding/engine";
+import { attachmentsIn, describeAnswer } from "@/lib/onboarding/describe";
+import { returnKey, returnPath } from "@/lib/calendar/return-to";
+import { answerForFollowup, interviewQueue } from "@/lib/onboarding/engine";
+import { MAX_FOLLOWUPS } from "@/lib/onboarding/agent";
 
 describe("component vocabulary", () => {
   it("marks working stages as auto-continue and nothing else", () => {
@@ -82,7 +85,12 @@ describe("describeAnswer", () => {
     expect(describeAnswer({ trade, component, answer: { url: "a.com" } })).toBe("a.com");
   });
 
-  it("lists uploaded documents by name", () => {
+  /*
+    Uploaded files are drawn as files, so there is no sentence to write for them.
+    An empty upload is the one case with something to say, because there is
+    nothing to show.
+  */
+  it("leaves uploaded documents to the cards, and speaks only when there are none", () => {
     const component = { kind: COMPONENT.DOCUMENTS };
     expect(
       describeAnswer({
@@ -90,7 +98,7 @@ describe("describeAnswer", () => {
         component,
         answer: { documents: [{ name: "prices.txt" }, { name: "faq.md" }] },
       }),
-    ).toBe("prices.txt, faq.md");
+    ).toBe(null);
     expect(describeAnswer({ trade, component, answer: { documents: [] } })).toBe(
       "Nothing to add",
     );
@@ -139,11 +147,60 @@ describe("describeAnswer", () => {
     );
   });
 
+  /*
+    The calendar answer arrives from a redirect rather than a click, so this is
+    the only case where the transcript line is written from a query string.
+  */
+  it("says which way the calendar offer went", () => {
+    const component = { kind: COMPONENT.CALENDAR };
+    expect(describeAnswer({ trade, component, answer: { connected: true } })).toBe(
+      "Connected my Google Calendar",
+    );
+    expect(describeAnswer({ trade, component, answer: { connected: false } })).toBe(
+      "Not right now",
+    );
+  });
+
   it("has nothing to say about a working stage", () => {
     expect(
       describeAnswer({ trade, component: working("Reading"), answer: undefined }),
     ).toBeNull();
     expect(describeAnswer({ trade, component: null, answer: {} })).toBeNull();
+  });
+});
+
+/*
+  The other half of the transcript line: the files themselves. Both sides call
+  this — the browser on click, the server when it saves the message — so a card
+  that appears immediately is the same card that is there after a reload.
+*/
+describe("attachmentsIn", () => {
+  it("keeps the files in the order they were sent, with their sizes", () => {
+    expect(
+      attachmentsIn({
+        documents: [
+          { name: "prices.pdf", bytes: 240_000, text: "…" },
+          { name: "induction.docx", bytes: 18_000, text: "…" },
+        ],
+      }),
+    ).toEqual([
+      { name: "prices.pdf", bytes: 240_000 },
+      { name: "induction.docx", bytes: 18_000 },
+    ]);
+  });
+
+  /* A message saved before sizes were recorded still has to draw its cards. */
+  it("takes a file with no size", () => {
+    expect(attachmentsIn({ documents: [{ name: "faq.md" }] })).toEqual([
+      { name: "faq.md", bytes: null },
+    ]);
+  });
+
+  it("finds nothing in any other answer", () => {
+    expect(attachmentsIn({ value: "Portland" })).toEqual([]);
+    expect(attachmentsIn({ documents: [] })).toEqual([]);
+    expect(attachmentsIn(undefined)).toEqual([]);
+    expect(attachmentsIn(null)).toEqual([]);
   });
 });
 
@@ -181,5 +238,74 @@ describe("answerForFollowup", () => {
 
   it("has no answer when there is no question", () => {
     expect(answerForFollowup(null, "anything")).toBeNull();
+  });
+});
+
+/*
+  How long the interview is allowed to get. Every question here is one a person
+  has to sit through before they see the thing they signed up for, so the two
+  limits are worth pinning down rather than leaving to drift.
+*/
+describe("how much the interview asks", () => {
+  const allKeys = PLUMBING.needs.map((n) => n.key);
+
+  it("asks about everything the agent can't take a call without", () => {
+    const queue = interviewQueue({ trade: PLUMBING, unresolved: allKeys });
+    const required = PLUMBING.needs.filter((n) => n.required).map((n) => n.key);
+
+    expect(queue).toEqual(required);
+  });
+
+  it("leaves an optional need to the dashboard rather than asking", () => {
+    const optional = PLUMBING.needs.filter((n) => !n.required).map((n) => n.key);
+    expect(optional.length).toBeGreaterThan(0);
+
+    const queue = interviewQueue({ trade: PLUMBING, unresolved: allKeys });
+    for (const key of optional) expect(queue).not.toContain(key);
+  });
+
+  /* Unless the documents disagreed about it — that's a real question. */
+  it("still asks about an optional need two documents disagree on", () => {
+    const optional = PLUMBING.needs.find((n) => !n.required).key;
+    const queue = interviewQueue({
+      trade: PLUMBING,
+      unresolved: allKeys,
+      conflicts: { [optional]: [{ value: "a" }, { value: "b" }] },
+    });
+
+    expect(queue).toContain(optional);
+  });
+
+  it("keeps the model-composed tail short", () => {
+    expect(MAX_FOLLOWUPS).toBe(2);
+  });
+});
+
+/*
+  The calendar step sends someone to Google and Google sends them back here. The
+  page to return to arrives as a query parameter, which makes this route the one
+  place in the app that could be talked into redirecting somewhere else.
+*/
+describe("where the calendar flow returns to", () => {
+  it("takes the two pages that ask for a calendar", () => {
+    expect(returnPath(returnKey("onboarding"))).toBe("/onboarding");
+    expect(returnPath(returnKey("dashboard"))).toBe("/dashboard");
+  });
+
+  it("refuses to be pointed anywhere else", () => {
+    for (const hostile of [
+      "https://evil.example.com",
+      "//evil.example.com",
+      "/dashboard/../../etc",
+      "onboarding.evil.com",
+      "",
+      null,
+      undefined,
+      "__proto__",
+      "constructor",
+    ]) {
+      expect(returnKey(hostile), String(hostile)).toBe("dashboard");
+      expect(returnPath(hostile), String(hostile)).toBe("/dashboard");
+    }
   });
 });

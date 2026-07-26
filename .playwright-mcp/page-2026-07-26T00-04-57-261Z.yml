@@ -1,0 +1,58 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e3]:
+    - link "Frontdesk" [ref=f4e4] [cursor=pointer]:
+      - /url: /
+    - generic [ref=f4e13]:
+      - generic [ref=f4e14]:
+        - heading "Ten minutes now. Every call after." [level=1] [ref=f4e15]:
+          - generic [ref=f4e16]: Ten minutes now.
+          - generic [ref=f4e17]: Every call after.
+        - paragraph [ref=f4e18]: You give Frontdesk the website and the documents you already have. It does the reading, and comes back with only what it couldn't find.
+        - generic [ref=f4e19]: No card, no contract
+        - list [ref=f4e24]:
+          - listitem [ref=f4e25]:
+            - generic [ref=f4e26]: "1"
+            - generic [ref=f4e27]:
+              - paragraph [ref=f4e28]: It reads first
+              - paragraph [ref=f4e29]: Your website and your documents, before it asks you anything.
+          - listitem [ref=f4e30]:
+            - generic [ref=f4e31]: "2"
+            - generic [ref=f4e32]:
+              - paragraph [ref=f4e33]: It asks second
+              - paragraph [ref=f4e34]: Only about the gaps — and only once.
+          - listitem [ref=f4e35]:
+            - generic [ref=f4e36]: "3"
+            - generic [ref=f4e37]:
+              - paragraph [ref=f4e38]: You get a number
+              - paragraph [ref=f4e39]: On your dashboard, with everything the agent knows beside it.
+        - paragraph [ref=f4e40]:
+          - link "← Back to the site ← Back to the site" [ref=f4e41] [cursor=pointer]:
+            - /url: /
+      - generic [ref=f4e43]:
+        - generic [ref=f4e44]:
+          - heading "Create your account" [level=2] [ref=f4e45]
+          - generic [ref=f4e46]:
+            - generic [ref=f4e47]:
+              - generic [ref=f4e48]:
+                - generic [ref=f4e49]: First name
+                - textbox "First name" [ref=f4e50]
+              - generic [ref=f4e51]:
+                - generic [ref=f4e52]: Last name
+                - textbox "Last name" [ref=f4e53]
+              - generic [ref=f4e54]:
+                - generic [ref=f4e55]: Company name
+                - textbox "Company name" [ref=f4e56]
+              - generic [ref=f4e57]:
+                - generic [ref=f4e58]: Email
+                - textbox "Email" [ref=f4e59]
+              - generic [ref=f4e60]:
+                - generic [ref=f4e61]: Password
+                - textbox "Password" [ref=f4e62]
+                - paragraph [ref=f4e63]: At least 8 characters.
+            - button "Create account" [ref=f4e64]
+        - paragraph [ref=f4e69]:
+          - text: Already have an account?
+          - link "Sign in Sign in" [ref=f4e71] [cursor=pointer]:
+            - /url: /signin
+  - button "Open Next.js Dev Tools" [ref=f4e78] [cursor=pointer]
+  - alert [ref=f4e82]

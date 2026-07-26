@@ -24,6 +24,8 @@ export default function Knowledge({ data, onRefresh }) {
 
   return (
     <div className="space-y-5">
+      <Summary knowledge={data.knowledge} conflicted={conflicted} unanswered={unanswered} />
+
       {(unanswered.length > 0 || conflicted.length > 0) && (
         <Banner unanswered={unanswered} conflicted={conflicted} />
       )}
@@ -54,6 +56,54 @@ export default function Knowledge({ data, onRefresh }) {
 
       <Prices prices={data.prices} />
     </div>
+  );
+}
+
+/*
+  Four numbers across the top, so the tab opens with a shape rather than a wall
+  of rows: how much the agent knows, how much of it came out of documents
+  rather than out of you, and what is still open.
+
+  Counted from the items themselves — `answered`, `provenance.source`,
+  `conflicts` — so a need added to the trade lands in these totals with no edit
+  here. Nothing in this file names a key.
+*/
+function Summary({ knowledge, conflicted, unanswered }) {
+  const answered = knowledge.filter((k) => k.answered);
+  const read = answered.filter(
+    (k) => k.provenance?.source === "website" || k.provenance?.source === "documents",
+  );
+
+  const tiles = [
+    { n: answered.length, of: knowledge.length, label: "Answers the agent has" },
+    { n: read.length, label: "It read for itself" },
+    { n: conflicted.length, label: "Waiting on you to pick", warn: conflicted.length > 0 },
+    { n: unanswered.length, label: "Goes to a person" },
+  ];
+
+  return (
+    <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      {tiles.map((tile) => (
+        <li
+          key={tile.label}
+          className="rounded-[var(--radius-inner)] border border-line bg-paper px-4 py-3.5 shadow-lift"
+        >
+          <p
+            className={`display text-[26px] leading-none ${
+              tile.warn ? "text-flag" : "text-ink"
+            }`}
+          >
+            {tile.n}
+            {tile.of != null && (
+              <span className="text-[15px] font-normal tracking-normal text-faint">
+                /{tile.of}
+              </span>
+            )}
+          </p>
+          <p className="mt-2 text-[12px] leading-snug text-muted">{tile.label}</p>
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -137,7 +187,11 @@ function KnowledgeRow({ trade, item, onSaved }) {
                   setDraft(item.value);
                   setEditing(true);
                 }}
-                className="text-[13px] font-medium text-accent hover:underline"
+                className={`shrink-0 rounded-full border px-3 py-1 text-[12.5px] font-medium transition-colors ${
+                  item.answered
+                    ? "border-line text-muted hover:border-line-strong hover:text-ink"
+                    : "border-transparent bg-ink text-white hover:bg-ink-soft"
+                }`}
               >
                 {item.answered ? "Change" : "Answer this"}
               </button>

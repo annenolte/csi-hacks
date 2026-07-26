@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# read-through cache: recorded output of work we can always do again (lib/cache/store.js)
+/.cache/
+
 # production
 /build
 

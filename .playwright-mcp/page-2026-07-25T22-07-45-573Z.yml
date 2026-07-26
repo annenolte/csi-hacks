@@ -1,0 +1,17 @@
+- generic [active] [ref=f25e1]:
+  - generic [ref=f25e3]:
+    - banner [ref=f25e4]:
+      - link "Frontdesk" [ref=f25e6] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f25e7]: ✂
+      - button "Sign out" [ref=f25e9]
+    - navigation "Dashboard sections" [ref=f25e10]:
+      - list [ref=f25e11]:
+        - listitem [ref=f25e12]:
+          - button "Overview" [ref=f25e13]
+        - listitem [ref=f25e14]:
+          - button "What it knows" [ref=f25e15]
+    - main [ref=f25e16]:
+      - paragraph [ref=f25e17]: Loading…
+  - button "Open Next.js Dev Tools" [ref=f25e23] [cursor=pointer]
+  - alert [ref=f25e27]

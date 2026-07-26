@@ -26,8 +26,12 @@
 
   --color-script-green: #5fcb6e;
   --color-script-blue: #4a93f7;
+  --color-script-red: #f0453a;
 
   --color-flag: #e0644a;
+
+  /* The reference's link hover — one saturated blue, used nowhere else. */
+  --color-hover-blue: #12a7ff;
 
   --radius-card: 20px;
   --radius-inner: 14px;
@@ -63,13 +67,224 @@ body {
   font-weight: 600;
 }
 
-/* The pastel mesh that bleeds off the top edge of the reference hero. */
+/*
+  The pastel mesh that bleeds off the top edge of the reference hero: four
+  colours smeared across the width, strongest where they leave the top of the
+  frame and gone entirely by the bottom of the band.
+
+  The vertical fade is a mask rather than a fifth gradient, so the colours stay
+  saturated where they are visible instead of being mixed toward the canvas.
+*/
 @utility mesh-top {
   background-image:
-    radial-gradient(60% 90% at 8% -10%, #dfe6ff 0%, transparent 60%),
-    radial-gradient(50% 80% at 34% -14%, #cfe4ff 0%, transparent 62%),
-    radial-gradient(46% 78% at 62% -12%, #fdf0c4 0%, transparent 60%),
-    radial-gradient(54% 86% at 88% -10%, #ffd9b8 0%, transparent 62%);
+    radial-gradient(46% 130% at 4% 0%, #c3ceff 0%, transparent 62%),
+    radial-gradient(42% 120% at 30% -4%, #a2d4fb 0%, transparent 64%),
+    radial-gradient(40% 116% at 57% -2%, #fbe49b 0%, transparent 62%),
+    radial-gradient(44% 124% at 82% 0%, #ffc59b 0%, transparent 64%),
+    radial-gradient(40% 118% at 100% -4%, #ffbfc6 0%, transparent 62%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 22%, transparent 96%);
+}
+
+/* The faint dotted graph paper the reference sets its product shot on. */
+@utility dot-grid {
+  background-image: radial-gradient(var(--color-line-strong) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/*
+  ---------------------------------------------------------------------------
+  Landing-page motion.
+
+  Five effects carry the reference's feel, and each is plain CSS here rather
+  than a library: the site being copied ships GSAP + Lenis + Framer Motion to
+  do them, which is three dependencies for a page that renders once.
+
+  Every one of them is decoration over content that is already readable, so
+  the reduced-motion block at the bottom can switch all of it off without
+  hiding anything.
+  ---------------------------------------------------------------------------
+*/
+
+/* 1. The headline arrives a character at a time. Each char carries its own
+   --i, so the stagger is an index times a step rather than N keyframes. */
+.char {
+  display: inline-block;
+  white-space: pre;
+  animation: char-in 0.62s cubic-bezier(0.2, 0.7, 0.25, 1) backwards;
+  animation-delay: calc(var(--i) * 24ms);
+}
+
+@keyframes char-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.42em);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+/* 2. Anything below the fold fades up as it arrives. Reveal.jsx adds
+   .is-in; without JS the element is simply already visible. */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.25, 1),
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.25, 1);
+  transition-delay: var(--delay, 0ms);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* 3. A line of the call arrives. CallMock.jsx lays every bubble out at its
+   final size on the first paint and only adds .is-shown, so a message can
+   pop in without anything below the panel moving. */
+.msg {
+  opacity: 0;
+}
+
+.msg.is-shown {
+  opacity: 1;
+  animation: msg-in 0.42s cubic-bezier(0.2, 0.8, 0.3, 1.25) backwards;
+}
+
+@keyframes msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(9px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The agent thinking, in the one idiom everyone reads without a caption. */
+.typing-dot {
+  opacity: 0.3;
+  animation: typing-bounce 1.15s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.16s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.32s;
+}
+
+@keyframes typing-bounce {
+  0%,
+  55%,
+  100% {
+    opacity: 0.3;
+    transform: none;
+  }
+  28% {
+    opacity: 0.9;
+    transform: translateY(-3px);
+  }
+}
+
+/* 4. Link hover rolls the label up and its duplicate takes its place. The
+   duplicate is content: attr(data-hover) on a pseudo-element, so the second
+   copy never reaches the accessibility tree and is never read twice. */
+.hover-roll {
+  position: relative;
+  display: inline-flex;
+  overflow-y: hidden;
+  white-space: nowrap;
+  line-height: 1.35;
+  transition: color 0.2s ease-in-out;
+}
+
+.hover-roll > span {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.25, 1);
+}
+
+.hover-roll > span::before {
+  content: attr(data-hover);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  white-space: nowrap;
+}
+
+.hover-roll:hover,
+.hover-roll:focus-visible {
+  color: var(--color-hover-blue);
+}
+
+.hover-roll:hover > span,
+.hover-roll:focus-visible > span {
+  transform: translateY(-100%);
+}
+
+/* 5. A conic gradient turns behind the primary button, clipped to a ring by
+   an inset backdrop of the same colour as the button. */
+@keyframes shimmer-turn {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.shimmer-spark {
+  position: absolute;
+  inset: -100%;
+  background: conic-gradient(
+    from calc(270deg - var(--spread) * 0.5),
+    transparent 0,
+    var(--shimmer-color) var(--spread),
+    transparent var(--spread)
+  );
+  animation: shimmer-turn 4s linear infinite;
+}
+
+/* The cursor dot trails the pointer and swells over anything clickable. The
+   native cursor stays on — this rides along with it rather than replacing it,
+   so a dropped frame can never leave someone without a pointer. */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  height: 24px;
+  width: 24px;
+  margin: -12px 0 0 -12px;
+  border-radius: 9999px;
+  background: var(--color-ink);
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    width 0.22s ease,
+    height 0.22s ease,
+    margin 0.22s ease,
+    background-color 0.22s ease;
+}
+
+/* Over anything clickable the dot opens into a ring, so it reads as a target
+   rather than covering the thing it is pointing at. */
+.cursor-dot.is-over {
+  height: 44px;
+  width: 44px;
+  margin: -22px 0 0 -22px;
+  background: transparent;
+  border: 1.5px solid var(--color-ink);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -78,5 +293,17 @@ body {
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .char,
+  .reveal,
+  .msg {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .cursor-dot {
+    display: none;
   }
 }

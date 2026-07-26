@@ -1,0 +1,287 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - paragraph [ref=e7]: Average user sav
+      - paragraph [ref=e8]:
+        - generic [ref=e9]:
+          - generic [ref=e10]: T
+          - generic [ref=e11]: h
+          - generic [ref=e12]: e
+        - generic [ref=e13]:
+          - generic [ref=e14]: w
+          - generic [ref=e15]: o
+          - generic [ref=e16]: r
+          - generic [ref=e17]: l
+          - generic [ref=e18]: d
+          - generic [ref=e19]: "'"
+          - generic [ref=e20]: s
+        - img "home of merlin" [ref=e21]
+        - generic [ref=e23]:
+          - generic [ref=e24]: f
+          - generic [ref=e25]: i
+          - generic [ref=e26]: r
+          - generic [ref=e27]: s
+          - generic [ref=e28]: t
+        - generic [ref=e29]: AI chief of staff
+      - paragraph [ref=e30]: Merlin finds your highest-impact priorities from your inbox and calendar, then helps you complete them with a single click.
+      - generic [ref=e32]:
+        - img "Try merlin for free for 7 days" [ref=e33]
+        - button [ref=e34] [cursor=pointer]:
+          - link "Start free trial Start free trial" [ref=e37]:
+            - /url: https://app.merlin.computer/auth
+      - generic [ref=e42]:
+        - paragraph [ref=e45]: Used by professionals at
+        - generic [ref=e47]:
+          - img "notion" [ref=e48]
+          - img "harvard university" [ref=e52]
+    - generic [ref=e60]:
+      - paragraph [ref=e72]:
+        - text: "Starting your day knowing exactly what matters:"
+        - generic [ref=e73]: emails prioritized, action items flagged, and your day mapped out before the caffeine hits.
+      - img "macbook" [ref=e74]
+    - generic [ref=e77]:
+      - paragraph [ref=e78]:
+        - generic [ref=e79]:
+          - generic [ref=e80]: "\""
+          - generic [ref=e81]: M
+          - generic [ref=e82]: e
+          - generic [ref=e83]: r
+          - generic [ref=e84]: l
+          - generic [ref=e85]: i
+          - generic [ref=e86]: "n"
+        - generic [ref=e87]:
+          - generic [ref=e88]: b
+          - generic [ref=e89]: e
+          - generic [ref=e90]: c
+          - generic [ref=e91]: a
+          - generic [ref=e92]: m
+          - generic [ref=e93]: e
+        - generic [ref=e94]:
+          - generic [ref=e95]: t
+          - generic [ref=e96]: h
+          - generic [ref=e97]: e
+        - generic [ref=e98]:
+          - generic [ref=e99]: o
+          - generic [ref=e100]: p
+          - generic [ref=e101]: e
+          - generic [ref=e102]: r
+          - generic [ref=e103]: a
+          - generic [ref=e104]: t
+          - generic [ref=e105]: i
+          - generic [ref=e106]: "n"
+          - generic [ref=e107]: g
+        - generic [ref=e108]:
+          - generic [ref=e109]: s
+          - generic [ref=e110]: "y"
+          - generic [ref=e111]: s
+          - generic [ref=e112]: t
+          - generic [ref=e113]: e
+          - generic [ref=e114]: m
+        - generic [ref=e115]:
+          - generic [ref=e116]: f
+          - generic [ref=e117]: o
+          - generic [ref=e118]: r
+        - generic [ref=e119]:
+          - generic [ref=e120]: m
+          - generic [ref=e121]: "y"
+        - generic [ref=e122]:
+          - generic [ref=e123]: d
+          - generic [ref=e124]: a
+          - generic [ref=e125]: "y"
+          - generic [ref=e126]: —
+          - generic [ref=e127]: c
+          - generic [ref=e128]: l
+          - generic [ref=e129]: e
+          - generic [ref=e130]: a
+          - generic [ref=e131]: r
+          - generic [ref=e132]: e
+          - generic [ref=e133]: d
+        - generic [ref=e134]:
+          - generic [ref=e135]: m
+          - generic [ref=e136]: "y"
+        - generic [ref=e137]:
+          - generic [ref=e138]: p
+          - generic [ref=e139]: l
+          - generic [ref=e140]: a
+          - generic [ref=e141]: t
+          - generic [ref=e142]: e
+        - generic [ref=e143]:
+          - generic [ref=e144]: a
+          - generic [ref=e145]: "n"
+          - generic [ref=e146]: d
+        - generic [ref=e147]:
+          - generic [ref=e148]: g
+          - generic [ref=e149]: a
+          - generic [ref=e150]: v
+          - generic [ref=e151]: e
+        - generic [ref=e152]:
+          - generic [ref=e153]: m
+          - generic [ref=e154]: e
+        - generic [ref=e155]:
+          - generic [ref=e156]: b
+          - generic [ref=e157]: a
+          - generic [ref=e158]: c
+          - generic [ref=e159]: k
+        - generic [ref=e160]:
+          - generic [ref=e161]: "1"
+          - generic [ref=e162]: "2"
+        - generic [ref=e163]:
+          - generic [ref=e164]: h
+          - generic [ref=e165]: o
+          - generic [ref=e166]: u
+          - generic [ref=e167]: r
+          - generic [ref=e168]: s
+        - generic [ref=e169]: a
+        - generic [ref=e171]:
+          - generic [ref=e172]: w
+          - generic [ref=e173]: e
+          - generic [ref=e174]: e
+          - generic [ref=e175]: k
+          - generic [ref=e176]: .
+          - generic [ref=e177]: "\""
+      - separator [ref=e178]
+      - generic [ref=e179]:
+        - paragraph [ref=e180]: Elias Moore
+        - paragraph [ref=e181]: CEO, Strideworks
+    - generic [ref=e183]:
+      - paragraph [ref=e184]: Your Inbox, Calendar & Slack – finally working together
+      - paragraph [ref=e185]: Merlin syncs Gmail, Google Calendar, and Slack so you can book trips, clear tasks, and silence chaos from one chat.
+      - generic [ref=e187]:
+        - paragraph [ref=e190]:
+          - text: Hey Merlin - When can
+          - generic [ref=e191]: Jason Glover
+          - text: and I squeeze in a trip to Tokyo together for 4 days?
+        - generic [ref=e192]: Checking calendars…
+        - generic [ref=e202]:
+          - paragraph [ref=e203]: "Alright, I've crunched the chaos. Here's the game plan:"
+          - paragraph [ref=e206]: Dates:March 16-20. Shifted Jason's 9 AM meeting to the 15th (he'll get over it).
+          - paragraph [ref=e209]: Flights:ANA Nonstop, March 16 @ 8 PM. Lie-flat seats, Wi-Fi, zero layover trauma.
+          - paragraph [ref=e212]: "Stay: Daikanyama Airbnb. Artsy, quiet, and 2 blocks from Arabica Coffee (Jason's Insta crush)."
+          - paragraph [ref=e213]: If this sounds good, hit the button below and I'll get things booked. If not, tell me what's off!
+      - generic [ref=e214]:
+        - generic [ref=e215]:
+          - paragraph [ref=e216]: Clarity over clutter
+          - paragraph [ref=e217]: No more jumping between apps. Merlin sees your full context and lines up what matters, when it matters.
+        - generic [ref=e218]:
+          - paragraph [ref=e220]: Summarize la
+          - paragraph [ref=e222]: Talk. Type. Done.
+          - paragraph [ref=e223]: Ask Merlin for anything. Whether it is a draft reply, a meeting proposal, or a quick summary, it happens instantly.
+    - generic [ref=e225]:
+      - paragraph [ref=e226]: Pricing
+      - paragraph [ref=e227]: Hire your full-time, dedicated AI chief of staff for only $19 per month.
+      - generic [ref=e228]:
+        - generic [ref=e229]:
+          - paragraph [ref=e231]: Merlin AI
+          - generic [ref=e232]:
+            - paragraph [ref=e237]: Available 24/7 to monitor your inbox, calendar, and Slack.
+            - separator [ref=e238]
+            - paragraph [ref=e243]: Schedule meetings, reply to investors, block time, or snooze threads instantly from your inbox.
+            - separator [ref=e244]
+            - paragraph [ref=e249]: Merlin combines ChatGPT, Superhuman, Calendly, or Clay and saves hundreds per month.
+            - separator [ref=e250]
+            - paragraph [ref=e255]: SOC 2-ready. No human sees your data. Merlin keeps your information private and secure.
+            - separator [ref=e256]
+            - paragraph [ref=e261]: Automatically maps your most important contacts from email, calendar, and Slack history.
+            - separator [ref=e262]
+            - paragraph [ref=e267]: Flags high-priority issues and suggests next actions without being asked.
+            - separator [ref=e268]
+            - paragraph [ref=e273]: $19 per month. No payroll, HR, or hidden costs.
+            - separator [ref=e274]
+            - paragraph [ref=e279]: Access Merlin from WhatsApp and take action on the go.
+            - separator [ref=e280]
+            - paragraph [ref=e285]: Connect Gmail, Slack, and Calendar in 60 seconds. No interviews or training.
+            - separator [ref=e286]
+            - paragraph [ref=e291]: No contracts or notice periods. Start and stop when you want.
+        - generic [ref=e292]:
+          - paragraph [ref=e294]: Traditional EA
+          - generic [ref=e295]:
+            - paragraph [ref=e300]: Works only during office hours. May miss urgent issues after hours or on weekends.
+            - separator [ref=e301]
+            - paragraph [ref=e306]: Requires back-and-forth. Delays are common due to bandwidth and task switching.
+            - separator [ref=e307]
+            - paragraph [ref=e312]: Still need separate tools for AI, scheduling, email UX, and contact intelligence.
+            - separator [ref=e313]
+            - paragraph [ref=e318]: Data privacy depends on one person's discretion and your trust.
+            - separator [ref=e319]
+            - paragraph [ref=e324]: Assistants maintain lists based on memory or scattered notes.
+            - separator [ref=e325]
+            - paragraph [ref=e330]: Waits for instruction. May overlook subtle but urgent items.
+            - separator [ref=e331]
+            - paragraph [ref=e336]: $4,000 to $8,000 per month plus benefits, software, and admin time.
+            - separator [ref=e337]
+            - paragraph [ref=e342]: Not optimized for async messaging or quick mobile-first communication.
+            - separator [ref=e343]
+            - paragraph [ref=e348]: Weeks to hire, train, and build trust. Impact is delayed.
+            - separator [ref=e349]
+            - paragraph [ref=e354]: Requires HR processes, transition plans, and emotional navigation.
+      - button [ref=e356] [cursor=pointer]:
+        - link "Make the switch to Merlin Make the switch to Merlin" [ref=e360]:
+          - /url: https://app.merlin.computer/auth
+    - paragraph [ref=e391]: Merlin was built for one. You.
+    - generic [ref=e394]:
+      - generic [ref=e395]:
+        - paragraph [ref=e396]:
+          - text: Your Data. Your Control.
+          - paragraph [ref=e397]: Fully Compliant.
+        - paragraph [ref=e398]: Merlin meets the highest industry standards, including SOC 2 Type II, GDPR, CCPA, and HIPAA, to ensure your data stays secure, private, and fully under your control.
+      - generic [ref=e399]:
+        - img "AICPA SOC2 Certified" [ref=e400]
+        - img "GDPR Compliant" [ref=e402]
+        - img "HIPAA Compliant" [ref=e404]
+    - generic [ref=e409]:
+      - generic [ref=e411]:
+        - img "how it works" [ref=e412]
+        - paragraph [ref=e413]: Ready to win back 12 hours a week?
+      - generic [ref=e414]:
+        - generic [ref=e415]:
+          - img "step one" [ref=e416]
+          - paragraph [ref=e417]: Connect in minutes
+          - paragraph [ref=e418]: Sync Gmail, Google Calendar, and more. Merlin filters the noise and finds what matters.
+        - generic [ref=e419]:
+          - img "step one" [ref=e420]
+          - paragraph [ref=e421]: See your day prioritized
+          - paragraph [ref=e422]: Merlin surfaces the emails, meetings, and tasks that matter most to your day.
+        - generic [ref=e423]:
+          - img "step one" [ref=e424]
+          - paragraph [ref=e425]: Take back your time
+          - paragraph [ref=e426]: Complete high-impact priorities with one click and reclaim 12+ hours a week.
+      - button "Start free trial" [ref=e428] [cursor=pointer]:
+        - paragraph [ref=e430]: Start free trial
+    - generic [ref=e433]:
+      - paragraph [ref=e434]: Questions? Merlin’s already three steps ahead.
+      - paragraph [ref=e435]: We figured you might ask. Here’s everything you need to know — before you even had to ask.
+      - generic [ref=e437]:
+        - button "What exactly does Merlin do?" [ref=e439] [cursor=pointer]
+        - button "How is Merlin different from Superhuman, Notion Calendar, Clay, or ChatGPT?" [ref=e445] [cursor=pointer]
+        - button "How much time can I actually save with Merlin?" [ref=e451] [cursor=pointer]
+        - button "Who is Merlin built for?" [ref=e457] [cursor=pointer]
+        - button "What are the core principles of Merlin's security program?" [ref=e463] [cursor=pointer]
+        - button "How does Merlin use my data for AI features?" [ref=e469] [cursor=pointer]
+        - button "How is data ownership handled?" [ref=e475] [cursor=pointer]
+        - button "What security certifications and evaluations does Merlin meet?" [ref=e481] [cursor=pointer]
+      - separator [ref=e486]
+      - generic [ref=e487]:
+        - generic [ref=e488]:
+          - generic [ref=e489]:
+            - paragraph [ref=e490]: Press
+            - button [ref=e491] [cursor=pointer]:
+              - paragraph [ref=e495]: Space
+            - paragraph [ref=e498]: to start your free trial
+          - generic [ref=e499]:
+            - link [ref=e500] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/merlin-hq
+            - link [ref=e503] [cursor=pointer]:
+              - /url: mailto:team@merlin.computer
+          - paragraph [ref=e506]: © 2025. Merlin Labs, Inc.
+        - generic [ref=e507]:
+          - link "Pricing" [ref=e508] [cursor=pointer]:
+            - /url: /pricing
+          - link "Blog" [ref=e509] [cursor=pointer]:
+            - /url: /blog
+        - generic [ref=e510]:
+          - link "Privacy policy" [ref=e511] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms of service" [ref=e512] [cursor=pointer]:
+            - /url: /terms
+      - img "merlin logo" [ref=e514]
+  - alert [ref=e515]

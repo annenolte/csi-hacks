@@ -1,0 +1,316 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - navigation "Primary":
+      - generic:
+        - link "Home":
+          - /url: /
+        - generic:
+          - link "How it works How it works":
+            - /url: /#how
+          - link "Trades Trades":
+            - /url: /#trades
+        - link "Sign in":
+          - /url: /signin
+        - link "Create account":
+          - /url: /signup
+    - banner [ref=f4e3]:
+      - link "Frontdesk" [ref=f4e4] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=f4e13]:
+        - link "Sign in Sign in" [ref=f4e15] [cursor=pointer]:
+          - /url: /signin
+        - link "Create an account" [ref=f4e17] [cursor=pointer]:
+          - /url: /signup
+    - main [ref=f4e18]:
+      - generic [ref=f4e19]:
+        - paragraph [ref=f4e20]: The average trade business misses one call in four
+        - heading [level=1] [ref=f4e22]:
+          - generic "A phone line that" [ref=f4e23]:
+            - generic [ref=f4e24]:
+              - generic [ref=f4e25]: A
+              - generic [ref=f4e27]: p
+              - generic [ref=f4e28]: h
+              - generic [ref=f4e29]: o
+              - generic [ref=f4e30]: "n"
+              - generic [ref=f4e31]: e
+              - generic [ref=f4e33]: l
+              - generic [ref=f4e34]: i
+              - generic [ref=f4e35]: "n"
+              - generic [ref=f4e36]: e
+              - generic [ref=f4e38]: t
+              - generic [ref=f4e39]: h
+              - generic [ref=f4e40]: a
+              - generic [ref=f4e41]: t
+          - generic [ref=f4e42]:
+            - generic "already" [ref=f4e43]:
+              - generic [ref=f4e44]: a
+              - generic [ref=f4e45]: l
+              - generic [ref=f4e46]: r
+              - generic [ref=f4e47]: e
+              - generic [ref=f4e48]: a
+              - generic [ref=f4e49]: d
+              - generic [ref=f4e50]: "y"
+            - generic "knows" [ref=f4e58]:
+              - generic [ref=f4e59]: k
+              - generic [ref=f4e60]: "n"
+              - generic [ref=f4e61]: o
+              - generic [ref=f4e62]: w
+              - generic [ref=f4e63]: s
+          - generic "the job" [ref=f4e64]:
+            - generic [ref=f4e65]:
+              - generic [ref=f4e66]: t
+              - generic [ref=f4e67]: h
+              - generic [ref=f4e68]: e
+              - generic [ref=f4e70]: j
+              - generic [ref=f4e71]: o
+              - generic [ref=f4e72]: b
+        - paragraph [ref=f4e73]: Hand over the website and the documents you'd give a new hire. Frontdesk reads all of it, asks about whatever's missing, and answers your phone with the answers you'd have given yourself.
+        - generic [ref=f4e74]:
+          - generic [ref=f4e75]: About ten minutes, once
+          - link [ref=f4e80] [cursor=pointer]:
+            - /url: /signup
+        - generic [ref=f4e87]:
+          - paragraph [ref=f4e90]: Reads what you already have
+          - list [ref=f4e92]:
+            - listitem [ref=f4e93]: Your website
+            - listitem [ref=f4e94]: PDF
+            - listitem [ref=f4e95]: Word
+            - listitem [ref=f4e96]: Excel
+            - listitem [ref=f4e97]: PowerPoint
+            - listitem [ref=f4e98]: Plain text
+          - paragraph [ref=f4e99]: PDF, Word, Excel, PowerPoint, text, markdown, CSV or HTML. Up to 2 MB each.
+      - generic [ref=f4e100]:
+        - generic [ref=f4e102]:
+          - generic [ref=f4e103]: Imagine
+          - paragraph [ref=f4e109]: "A caller at 7pm on a Sunday getting a real answer: your hours, your patch, what you charge for a drain, and a slot in your calendar before they call the next number on the list."
+        - 'img "An illustration of the Frontdesk dashboard: an agent phone number, a connected calendar, and rows of what the agent learned from the business''s own documents." [ref=f4e111]':
+          - generic [ref=f4e112]:
+            - generic [ref=f4e113]: frontdesk.app/dashboard
+            - generic [ref=f4e118]:
+              - generic [ref=f4e119]:
+                - generic [ref=f4e120]: Overview
+                - generic [ref=f4e121]: Knowledge
+                - generic [ref=f4e122]: Documents
+              - generic [ref=f4e123]:
+                - paragraph [ref=f4e124]: Your agent's number
+                - paragraph [ref=f4e125]: (415) 555-0142
+                - generic [ref=f4e126]: Copy number
+              - generic [ref=f4e127]:
+                - generic [ref=f4e128]:
+                  - paragraph [ref=f4e129]: Calendar
+                  - paragraph [ref=f4e130]: Google Calendar connected
+                  - paragraph [ref=f4e132]: "Next free slot: Tue 8:30am"
+                - generic [ref=f4e133]:
+                  - paragraph [ref=f4e134]: Documents
+                  - list [ref=f4e135]:
+                    - listitem [ref=f4e136]:
+                      - generic [ref=f4e137]: PDF
+                      - text: price-list.pdf
+                    - listitem [ref=f4e138]:
+                      - generic [ref=f4e139]: DOCX
+                      - text: service-area.docx
+                    - listitem [ref=f4e140]:
+                      - generic [ref=f4e141]: TXT
+                      - text: after-hours.txt
+              - generic [ref=f4e142]:
+                - generic [ref=f4e143]:
+                  - generic [ref=f4e144]: Hours
+                  - generic [ref=f4e145]: Mon–Fri 7am–6pm, Sat 8am–2pm
+                  - generic [ref=f4e146]: From your website
+                - generic [ref=f4e147]:
+                  - generic [ref=f4e148]: Service area
+                  - generic [ref=f4e149]: Oakland, Berkeley, Alameda, San Leandro
+                  - generic [ref=f4e150]: From price-list.pdf
+                - generic [ref=f4e151]:
+                  - generic [ref=f4e152]: Drain unblock
+                  - generic [ref=f4e153]: $180 flat
+                  - generic [ref=f4e154]: From price-list.pdf
+                - generic [ref=f4e155]:
+                  - generic [ref=f4e156]: Sewer line
+                  - generic [ref=f4e157]: Always a human
+                  - generic [ref=f4e158]: Trade rule
+      - generic [ref=f4e160]:
+        - generic [ref=f4e161]:
+          - heading "Your website, your documents & your calendar, finally one answer" [level=2] [ref=f4e162]
+          - paragraph [ref=f4e163]: Frontdesk reads the lot in one pass, quotes the sentence each fact came from, and hands a caller the same answer you would have.
+        - 'img "An illustration of a call: a customer asks about a blocked drain at 7:40pm on a Sunday, and the Frontdesk agent answers with the business''s own hours, callout fee and price, then books the first free slot." [ref=f4e165]':
+          - generic [ref=f4e166]:
+            - paragraph [ref=f4e167]: Sunday, 7:41pm, incoming call
+            - paragraph [ref=f4e169]: Hi, my kitchen drain is completely blocked. Are you even open?
+            - generic [ref=f4e171]:
+              - generic [ref=f4e172]: F
+              - generic [ref=f4e173]:
+                - paragraph [ref=f4e174]: We're closed right now. Mon–Fri 7 to 6, Saturdays 8 to 2. I can still get you booked.
+                - paragraph [ref=f4e175]: Where are you?
+            - paragraph [ref=f4e177]: Berkeley, near Ashby.
+            - generic [ref=f4e179]:
+              - generic [ref=f4e180]: F
+              - generic [ref=f4e181]:
+                - paragraph [ref=f4e182]: "That's in our patch. Here's where we land:"
+                - list [ref=f4e183]:
+                  - listitem [ref=f4e184]:
+                    - generic [ref=f4e185]: "Drain unblock:"
+                    - text: $180 flat, from the price list
+                  - listitem [ref=f4e186]:
+                    - generic [ref=f4e187]: "Out of hours:"
+                    - text: $95 callout on top, after 6pm
+                  - listitem [ref=f4e188]:
+                    - generic [ref=f4e189]: "First slot:"
+                    - text: Monday 8:30am with Dave
+                - paragraph [ref=f4e190]: Want me to hold Monday 8:30, or find something sooner?
+                - generic [ref=f4e191]: Book Monday 8:30am
+      - generic [ref=f4e193]:
+        - generic [ref=f4e195]:
+          - paragraph [ref=f4e196]: Read, not guessed
+          - heading "Every answer has a source" [level=3] [ref=f4e197]
+          - paragraph [ref=f4e198]: Each fact carries the sentence it came from. When two documents disagree, you get both and pick. Nothing is averaged into a number a caller would be quoted.
+        - generic [ref=f4e200]:
+          - paragraph [ref=f4e201]: Not-found is an answer
+          - heading "It asks rather than invents" [level=3] [ref=f4e202]
+          - paragraph [ref=f4e203]: If your documents never said it, the agent doesn't say it either. The gap becomes a question you answer once, in a conversation, not a field you'd never have filled in.
+      - generic [ref=f4e204]:
+        - heading "One agent per trade. You wouldn't hire a SaaS sales rep to answer a trade line." [level=2] [ref=f4e206]
+        - list [ref=f4e207]:
+          - listitem [ref=f4e208]:
+            - generic [ref=f4e209]: 🔧
+            - heading "Plumbing" [level=3] [ref=f4e211]
+            - paragraph [ref=f4e212]: Drains, leaks, water heaters, fixtures.
+          - listitem [ref=f4e213]:
+            - generic [ref=f4e214]: ⚡
+            - heading "Electrical" [level=3] [ref=f4e216]
+            - paragraph [ref=f4e217]: Faults, rewires, panels, EV chargers.
+          - listitem [ref=f4e218]:
+            - generic [ref=f4e219]: 🌡️
+            - heading "Heating & cooling" [level=3] [ref=f4e221]
+            - paragraph [ref=f4e222]: Furnaces, heat pumps, servicing.
+          - listitem [ref=f4e223]:
+            - generic [ref=f4e224]: 🔑
+            - heading "Locksmith" [level=3] [ref=f4e226]
+            - paragraph [ref=f4e227]: Lockouts, rekeys, hardware.
+      - generic [ref=f4e229]:
+        - generic [ref=f4e231]:
+          - generic [ref=f4e232]: How it works
+          - generic [ref=f4e237]:
+            - heading "Setup is a conversation, not a form." [level=2] [ref=f4e238]
+            - paragraph [ref=f4e239]: You talk it through once, the way you'd brief someone on their first day. No fields to tab between, nothing to fill in twice, and it asks about a thing only if your own documents left it out.
+        - list [ref=f4e240]:
+          - listitem [ref=f4e241]:
+            - text: "01"
+            - heading "Pick your trade" [level=3] [ref=f4e242]
+            - paragraph [ref=f4e243]: Your specialised agent already knows the work and what callers ring about. You're not training it from nothing, you're telling it about your business.
+          - listitem [ref=f4e244]:
+            - text: "02"
+            - heading "Hand over what you have" [level=3] [ref=f4e245]
+            - paragraph [ref=f4e246]: Your website, your price list, the induction notes you give a new hire. Drop them into the chat and it reads all of it at once.
+          - listitem [ref=f4e247]:
+            - text: "03"
+            - heading "Answer what's missing" [level=3] [ref=f4e248]
+            - paragraph [ref=f4e249]: It comes back with the gaps, the things no document covered, and asks about those one at a time. Nothing you've already answered gets asked twice.
+      - generic [ref=f4e250]:
+        - generic [ref=f4e251]:
+          - heading "What the caller gets" [level=2] [ref=f4e252]
+          - paragraph [ref=f4e253]: A missed call is a customer who has already dialled someone else. Here is the same Sunday evening, twice.
+        - generic [ref=f4e254]:
+          - generic [ref=f4e255]:
+            - paragraph [ref=f4e256]: Frontdesk
+            - list [ref=f4e257]:
+              - listitem [ref=f4e258]: Answers at 7pm on a Sunday, in your words.
+              - listitem [ref=f4e262]: Quotes the drain price your own price list states.
+              - listitem [ref=f4e266]: Knows your patch and says no to jobs outside it.
+              - listitem [ref=f4e270]: Sees your calendar and offers the first slot that's free.
+              - listitem [ref=f4e274]: Sends the jobs it shouldn't quote, sewer and repipe, straight to you.
+              - listitem [ref=f4e278]: Reads a new price list the day you upload it.
+          - generic [ref=f4e282]:
+            - paragraph [ref=f4e283]: Voicemail
+            - list [ref=f4e284]:
+              - listitem [ref=f4e285]: Takes a message, if they leave one. Most don't.
+              - listitem [ref=f4e289]: Can't quote anything. The caller rings the next number.
+              - listitem [ref=f4e293]: Books nothing and screens nothing.
+              - listitem [ref=f4e297]: Leaves you to ring back and start the diary from scratch.
+              - listitem [ref=f4e301]: Sends everything to you, tomorrow, out of order.
+              - listitem [ref=f4e305]: Never learns anything.
+        - link "Give your callers the first one" [ref=f4e310] [cursor=pointer]:
+          - /url: /signup
+      - generic [ref=f4e315]:
+        - generic [ref=f4e316]: Of every call you'll take this year,
+        - paragraph [ref=f4e317]:
+          - text: the one that pays for thisis the one you
+          - generic [ref=f4e318]: didn't
+          - text: hear ring.
+      - generic [ref=f4e322]:
+        - generic [ref=f4e323]:
+          - heading "Your words. Not the model's." [level=2] [ref=f4e324]
+          - paragraph [ref=f4e325]: A guessed answer gets repeated to a real caller as though your business had promised it. So a fact that isn't in your documents never becomes one. It becomes a question, and you answer it once.
+        - list [ref=f4e326]:
+          - listitem [ref=f4e327]:
+            - paragraph [ref=f4e328]: Sourced
+            - paragraph [ref=f4e329]: Every fact quotes the sentence it came from.
+          - listitem [ref=f4e330]:
+            - paragraph [ref=f4e331]: Never guessed
+            - paragraph [ref=f4e332]: Below 0.7 confidence, it asks instead of answering.
+          - listitem [ref=f4e333]:
+            - paragraph [ref=f4e334]: Always human
+            - paragraph [ref=f4e335]: Sewer and repipe go to you, whatever a document says.
+      - generic [ref=f4e337]:
+        - generic [ref=f4e338]: Ten minutes
+        - heading "Stop losing the ones who don't leave a message" [level=2] [ref=f4e343]
+        - list [ref=f4e344]:
+          - listitem [ref=f4e345]:
+            - generic [ref=f4e346]: "1"
+            - heading "Sign up and pick your trade" [level=3] [ref=f4e347]
+            - paragraph [ref=f4e348]: A minute to sign up, and no card.
+          - listitem [ref=f4e349]:
+            - generic [ref=f4e350]: "2"
+            - heading "Talk it through once" [level=3] [ref=f4e351]
+            - paragraph [ref=f4e352]: Paste your site, drop your documents, answer the gaps.
+          - listitem [ref=f4e353]:
+            - generic [ref=f4e354]: "3"
+            - heading "Hand out the number" [level=3] [ref=f4e355]
+            - paragraph [ref=f4e356]: It's on your dashboard, with everything the agent knows.
+        - link [ref=f4e358] [cursor=pointer]:
+          - /url: /signup
+      - generic [ref=f4e366]:
+        - generic [ref=f4e367]:
+          - heading "Questions? We had them too." [level=2] [ref=f4e368]
+          - paragraph [ref=f4e369]: The things every owner asks in the first five minutes, answered before you have to.
+        - generic [ref=f4e371]:
+          - heading [level=3] [ref=f4e373]:
+            - button "What exactly does Frontdesk do?" [ref=f4e374]:
+              - generic [ref=f4e375]: +
+          - heading [level=3] [ref=f4e378]:
+            - button "What do I actually have to hand over?" [ref=f4e379]:
+              - generic [ref=f4e380]: +
+          - heading [level=3] [ref=f4e383]:
+            - button "What happens when two of my documents disagree?" [ref=f4e384]:
+              - generic [ref=f4e385]: +
+          - heading [level=3] [ref=f4e388]:
+            - button "Will it quote prices to customers?" [ref=f4e389]:
+              - generic [ref=f4e390]: +
+          - heading [level=3] [ref=f4e393]:
+            - button "Do I have to connect my calendar?" [ref=f4e394]:
+              - generic [ref=f4e395]: +
+          - heading [level=3] [ref=f4e398]:
+            - button "Can I change what it knows afterwards?" [ref=f4e399]:
+              - generic [ref=f4e400]: +
+    - contentinfo [ref=f4e402]:
+      - generic [ref=f4e403]:
+        - generic [ref=f4e404]:
+          - generic [ref=f4e405]:
+            - text: Press
+            - generic [ref=f4e406]: Space ␣
+            - text: to create an account
+          - navigation "Footer" [ref=f4e407]:
+            - generic [ref=f4e408]:
+              - link "How it works How it works" [ref=f4e409] [cursor=pointer]:
+                - /url: /#how
+              - link "Trades Trades" [ref=f4e411] [cursor=pointer]:
+                - /url: /#trades
+            - generic [ref=f4e413]:
+              - link "Sign in Sign in" [ref=f4e414] [cursor=pointer]:
+                - /url: /signin
+              - link "Create an account Create an account" [ref=f4e416] [cursor=pointer]:
+                - /url: /signup
+        - paragraph [ref=f4e418]: © 2026 Frontdesk. A working prototype, not a live phone service.
+        - generic [ref=f4e419]: frontdesk
+  - button "Open Next.js Dev Tools" [ref=f4e433] [cursor=pointer]
+  - alert [ref=f4e437]

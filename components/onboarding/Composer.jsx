@@ -1,10 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { getTrade } from "@/lib/trades";
 import NeedField from "../NeedField";
 import { Button, inputClass } from "../ui";
 import { COMPONENT } from "@/lib/onboarding/components";
+import { readFile, rejectionFor } from "@/lib/documents/read";
+import {
+  ACCEPT,
+  ACCEPT_SUMMARY,
+  MAX_DOCUMENTS_PER_UPLOAD,
+  byteSize,
+  extensionOf,
+} from "@/lib/documents/formats";
 
 /*
   Renders whatever structured input the agent put up, and hands the answer back.
@@ -37,6 +45,8 @@ export default function Composer({ component, tradeId, busy, onAnswer }) {
       );
     case COMPONENT.FOLLOWUP:
       return <Followup key={key} component={component} onAnswer={onAnswer} />;
+    case COMPONENT.CALENDAR:
+      return <Calendar key={key} component={component} onAnswer={onAnswer} />;
     default:
       return null;
   }
@@ -132,40 +142,67 @@ function UrlInput({ component, onAnswer }) {
   );
 }
 
-const MAX_DOC_BYTES = 2 * 1024 * 1024;
+/*
+  What a file looks like on the way in.
 
+  A card per file, appearing the moment it's dropped rather than when it's been
+  read. The bytes go to the server and come back as text — a PDF or a workbook is
+  parsed there, not here — so there is a real wait to show, and showing it per
+  file means the .txt that took 200ms doesn't sit hidden behind the 40-page PDF.
+*/
 function Documents({ component, onAnswer }) {
   const [files, setFiles] = useState([]);
-  const [error, setError] = useState(null);
+  const [batchError, setBatchError] = useState(null);
   const [dragging, setDragging] = useState(false);
+  /* Ids, not names: two folders can both hand you a "prices.pdf". */
+  const nextId = useRef(0);
 
-  async function take(fileList) {
-    setError(null);
-    const accepted = [];
+  const reading = files.some((f) => f.status === "reading");
+  const ready = files.filter((f) => f.status === "ready");
 
-    for (const file of Array.from(fileList ?? [])) {
-      /*
-        Text only, checked here and again on the server. We quote sentences back
-        as the source of every fact, so a format we'd have to guess our way
-        through would put unverifiable quotes in front of the owner.
-      */
-      if (!/\.(txt|md|markdown|csv)$/i.test(file.name)) {
-        setError(`${file.name} isn't a text file. Plain text, markdown or CSV.`);
-        continue;
-      }
-      if (file.size > MAX_DOC_BYTES) {
-        setError(`${file.name} is too big — 2 MB is the limit.`);
-        continue;
-      }
+  function take(fileList) {
+    const dropped = Array.from(fileList ?? []);
+    if (!dropped.length) return;
 
-      accepted.push({ name: file.name, text: await file.text() });
+    setBatchError(null);
+
+    const room = MAX_DOCUMENTS_PER_UPLOAD - files.length;
+    if (dropped.length > room) {
+      setBatchError(
+        `That's more than ${MAX_DOCUMENTS_PER_UPLOAD} files. Add the rest afterwards.`,
+      );
     }
 
-    if (accepted.length) {
+    for (const file of dropped.slice(0, Math.max(0, room))) {
+      const id = nextId.current++;
+      const rejection = rejectionFor(file);
+
       setFiles((current) => [
         ...current,
-        ...accepted.filter((a) => !current.some((c) => c.name === a.name)),
+        {
+          id,
+          name: file.name,
+          bytes: file.size,
+          status: rejection ? "error" : "reading",
+          error: rejection,
+          text: null,
+        },
       ]);
+
+      if (rejection) continue;
+
+      /* Each file settles on its own, so the list fills in as they finish. */
+      readFile(file).then(({ document, error }) => {
+        setFiles((current) =>
+          current.map((entry) =>
+            entry.id !== id
+              ? entry
+              : document
+                ? { ...entry, status: "ready", text: document.text }
+                : { ...entry, status: "error", error },
+          ),
+        );
+      });
     }
   }
 
@@ -186,10 +223,15 @@ function Documents({ component, onAnswer }) {
           dragging ? "border-accent bg-accent-soft" : "border-line-strong bg-cream"
         }`}
       >
+        {/*
+          Read from the format table rather than from `component`, which is
+          replayed out of the conversation row and would pin whichever formats
+          were current when that turn was written.
+        */}
         <input
           type="file"
           multiple
-          accept={component.accept}
+          accept={ACCEPT}
           className="sr-only"
           onChange={(e) => {
             take(e.target.files);
@@ -200,50 +242,55 @@ function Documents({ component, onAnswer }) {
           Drop files here, or click to choose
         </span>
         <span className="mt-1 text-[13px] text-muted">
-          Plain text, markdown or CSV. Price lists, service notes, induction sheets.
+          Price lists, service notes, induction sheets. {ACCEPT_SUMMARY}
         </span>
       </label>
 
       {files.length > 0 && (
-        <ul className="mt-3 space-y-1.5">
+        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {files.map((file) => (
-            <li
-              key={file.name}
-              className="flex items-center justify-between gap-3 rounded-lg bg-canvas px-3 py-2"
-            >
-              <span className="min-w-0 flex-1 truncate text-[13.5px] text-ink">
-                {file.name}
-              </span>
-              <span className="shrink-0 text-[12.5px] text-faint">
-                {file.text.length.toLocaleString()} chars
-              </span>
-              <button
-                type="button"
-                onClick={() => setFiles(files.filter((f) => f.name !== file.name))}
-                className="shrink-0 text-[12.5px] font-medium text-muted hover:text-flag"
-              >
-                Remove
-              </button>
+            <li key={file.id}>
+              <FileCard
+                file={file}
+                onRemove={() =>
+                  setFiles((current) => current.filter((f) => f.id !== file.id))
+                }
+              />
             </li>
           ))}
         </ul>
       )}
 
-      {error && (
+      {batchError && (
         <p role="alert" className="mt-3 text-[13px] text-flag">
-          {error}
+          {batchError}
         </p>
       )}
 
       <div className="mt-4 flex flex-wrap items-center gap-4">
         <Button
-          onClick={() => onAnswer({ documents: files })}
-          disabled={files.length === 0}
+          onClick={() =>
+            onAnswer({
+              /*
+                The size travels with the file. The transcript draws a card per
+                document on both sides of the round trip, and a card that says
+                nothing about how much document arrived is a filename in a box.
+              */
+              documents: ready.map((f) => ({
+                name: f.name,
+                text: f.text,
+                bytes: f.bytes,
+              })),
+            })
+          }
+          disabled={ready.length === 0 || reading}
           chevron
         >
-          {files.length
-            ? `Read ${files.length} file${files.length === 1 ? "" : "s"}`
-            : "Read them"}
+          {reading
+            ? "Reading…"
+            : ready.length
+              ? `Read ${ready.length} file${ready.length === 1 ? "" : "s"}`
+              : "Read them"}
         </Button>
         <button
           type="button"
@@ -256,6 +303,107 @@ function Documents({ component, onAnswer }) {
     </Panel>
   );
 }
+
+/*
+  One card per file: type badge, name, and what happened to it.
+
+  A refused file keeps its card and says why on it, rather than moving the
+  explanation to a list underneath. Dropping five documents and having one
+  refused should point at the one — a message with a filename in it, three
+  cards away from the card it's about, makes the person do that matching.
+*/
+function FileCard({ file, onRemove }) {
+  const ext = extensionOf(file.name).toUpperCase() || "FILE";
+  const failed = file.status === "error";
+
+  return (
+    <div
+      className={`flex items-start gap-3 rounded-[var(--radius-inner)] border px-3 py-2.5 transition-colors ${
+        failed ? "border-flag/30 bg-flag/5" : "border-line bg-canvas"
+      }`}
+    >
+      <span
+        aria-hidden="true"
+        className={`grid h-9 w-9 shrink-0 place-items-center rounded-lg text-[9.5px] font-semibold tracking-[0.02em] ${
+          failed ? "bg-flag/10 text-flag" : "bg-paper text-muted"
+        }`}
+      >
+        {ext.slice(0, 4)}
+      </span>
+
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-[13.5px] font-medium text-ink">
+          {file.name}
+        </span>
+        {/*
+          A rejection wraps; everything else stays on one line. The whole value
+          of the message is the second half of it — "save as .docx" — and a
+          truncated version tells someone their file was refused and then hides
+          the one thing they could do about it.
+        */}
+        <span
+          className={`mt-0.5 flex gap-1.5 text-[12px] ${
+            failed ? "items-start text-flag" : "items-center text-muted"
+          }`}
+        >
+          {file.status === "reading" && <Spinner />}
+          <span className={failed ? "leading-snug" : "truncate"}>
+            {file.status === "reading"
+              ? "Reading…"
+              : failed
+                ? file.error
+                : `${byteSize(file.bytes)} · ${wordCount(file.text)} words read`}
+          </span>
+        </span>
+      </span>
+
+      <button
+        type="button"
+        onClick={onRemove}
+        aria-label={`Remove ${file.name}`}
+        className="mt-0.5 shrink-0 rounded-full p-1 text-muted transition-colors hover:bg-paper hover:text-flag"
+      >
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path
+            d="M3.5 3.5l7 7m0-7l-7 7"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+          />
+        </svg>
+      </button>
+    </div>
+  );
+}
+
+function Spinner() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      aria-hidden="true"
+      className="shrink-0 animate-spin"
+    >
+      <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.5" opacity="0.25" />
+      <path
+        d="M10.5 6A4.5 4.5 0 006 1.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+/*
+  Words, not characters. "12,481 chars" is a number nobody has a feel for; the
+  point of the line is to say the file was really read, and roughly how much of
+  it there was.
+*/
+const wordCount = (text) =>
+  ((text ?? "").match(/\S+/g)?.length ?? 0).toLocaleString();
 
 function Need({ component, tradeId, onAnswer }) {
   const trade = getTrade(tradeId);
@@ -317,6 +465,38 @@ function Need({ component, tradeId, onAnswer }) {
             Skip this one
           </button>
         )}
+      </div>
+    </Panel>
+  );
+}
+
+/*
+  The one input that leaves the page.
+
+  A link, not a button that posts an answer: Google's consent screen is a full
+  navigation, and the conversation is picked back up when the callback lands
+  someone on /onboarding again. Conversation.jsx answers this question on their
+  behalf from the flag in the URL, so the transcript reads the same either way.
+*/
+function Calendar({ component, onAnswer }) {
+  return (
+    <Panel>
+      <p className="text-[13.5px] leading-snug text-muted">
+        We ask for read and write access: read to find open slots, write to put a
+        booked job in. You can disconnect any time from the dashboard.
+      </p>
+
+      <div className="mt-4 flex flex-wrap items-center gap-4">
+        <a href="/api/calendar/google/start?next=onboarding">
+          <Button chevron>Connect Google Calendar</Button>
+        </a>
+        <button
+          type="button"
+          onClick={() => onAnswer({ connected: false })}
+          className="text-[13.5px] font-medium text-muted hover:text-ink hover:underline"
+        >
+          {component.skipLabel}
+        </button>
       </div>
     </Panel>
   );

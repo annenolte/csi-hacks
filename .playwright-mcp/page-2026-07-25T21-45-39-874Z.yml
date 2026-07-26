@@ -1,0 +1,23 @@
+- generic [ref=f2e1]:
+  - generic [ref=f2e3]:
+    - banner [ref=f2e4]:
+      - link "Frontdesk" [ref=f2e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f2e6]: ✂
+      - generic [ref=f2e27]: Nolte & Sons Plumbing
+    - generic [ref=f2e8]:
+      - generic [ref=f2e28]:
+        - generic [ref=f2e29]: ✂
+        - paragraph [ref=f2e30]: Nolte & Sons Plumbing is set up, and I'll be the one configuring the agent that answers your calls — this won't take long. Pick your trade from the cards below so I know which set of questions to run.
+      - paragraph [ref=f2e64]: Plumbing
+      - generic [ref=f2e65]:
+        - generic [ref=f2e66]: ✂
+        - paragraph [ref=f2e67]: Plumbing it is. Easiest place to start is your website — I'll read it myself and pull out the service area, hours, and what you cover, so you're not retyping what's already written. Drop the address in below, or let me know if there isn't one and we'll do it the long way.
+      - generic [ref=f2e68]:
+        - generic [ref=f2e69]:
+          - textbox "Website address" [active] [ref=f2e70]:
+            - /placeholder: yourbusiness.com
+          - button "Read it" [disabled]
+        - button "We don't have a website" [ref=f2e71]
+  - button "Open Next.js Dev Tools" [ref=f2e22] [cursor=pointer]
+  - alert [ref=f2e26]

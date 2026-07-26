@@ -1,0 +1,34 @@
+- generic [active] [ref=f5e1]:
+  - generic [ref=f5e3]:
+    - link "Frontdesk" [ref=f5e4] [cursor=pointer]:
+      - /url: /
+      - generic [ref=f5e5]: ✂
+      - text: Frontdesk
+    - generic [ref=f5e6]:
+      - heading "Create your account" [level=1] [ref=f5e7]
+      - paragraph [ref=f5e8]: Four details, then you'll talk to the agent that answers your phone.
+      - generic [ref=f5e9]:
+        - generic [ref=f5e10]:
+          - generic [ref=f5e11]:
+            - generic [ref=f5e12]: First name
+            - textbox "First name" [ref=f5e13]
+          - generic [ref=f5e14]:
+            - generic [ref=f5e15]: Last name
+            - textbox "Last name" [ref=f5e16]
+          - generic [ref=f5e17]:
+            - generic [ref=f5e18]: Company name
+            - textbox "Company name" [ref=f5e19]
+          - generic [ref=f5e20]:
+            - generic [ref=f5e21]: Email
+            - textbox "Email" [ref=f5e22]
+          - generic [ref=f5e23]:
+            - generic [ref=f5e24]: Password
+            - textbox "Password" [ref=f5e25]
+            - paragraph [ref=f5e26]: At least 8 characters.
+        - button "Create account" [ref=f5e27]
+    - paragraph [ref=f5e28]:
+      - text: Already have an account?
+      - link "Sign in" [ref=f5e29] [cursor=pointer]:
+        - /url: /signin
+  - button "Open Next.js Dev Tools" [ref=f5e35] [cursor=pointer]
+  - alert [ref=f5e39]

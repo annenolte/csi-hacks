@@ -1,0 +1,44 @@
+- generic [ref=f6e1]:
+  - generic [ref=f6e3]:
+    - banner [ref=f6e4]:
+      - link "Frontdesk" [ref=f6e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f6e6]: ✂
+      - generic [ref=f6e17]: Savior Plumbing
+    - generic [ref=f6e8]:
+      - generic [ref=f6e18]:
+        - generic [ref=f6e19]: ✂
+        - paragraph [ref=f6e20]: I'm the specialist who'll get your phone agent set up, and I'll keep this quick. First thing I need is your trade — pick it from the cards below. Plumbing is the only one live right now, so if that's not you, we're not ready for you yet.
+      - paragraph [ref=f6e64]: Plumbing
+      - generic [ref=f6e65]:
+        - generic [ref=f6e66]: ✂
+        - paragraph [ref=f6e67]: Plumbing it is. Before I ask you anything else, I'd rather just read your website and pull the basics from there than have you retype what's already published. Drop the address in below — and if Savior Plumbing doesn't have a site, there's an option to say so and we'll do it the manual way.
+      - paragraph [ref=f6e73]: saviorplumbing.com
+      - generic [ref=f6e74]:
+        - generic [ref=f6e75]: ✂
+        - paragraph [ref=f6e76]: "Read it. Got 7 things off it. Now the more useful part: what would you hand a new employee on their first day? A price list, notes on where you'll travel, an induction sheet."
+      - generic [ref=f6e77]:
+        - generic [ref=f6e78] [cursor=pointer]:
+          - button "Drop files here, or click to choose Price lists, service notes, induction sheets. PDF, Word, Excel, PowerPoint, text, markdown, CSV or HTML. Up to 2 MB each." [active] [ref=f6e79]
+          - generic [ref=f6e80]: Drop files here, or click to choose
+          - generic [ref=f6e81]: Price lists, service notes, induction sheets. PDF, Word, Excel, PowerPoint, text, markdown, CSV or HTML. Up to 2 MB each.
+        - list [ref=f6e84]:
+          - listitem [ref=f6e85]:
+            - generic [ref=f6e86]:
+              - generic [ref=f6e87]: MD
+              - generic [ref=f6e88]:
+                - generic [ref=f6e89]: price-list.md
+                - generic [ref=f6e90]: 1 KB · 101 words read
+              - button "Remove price-list.md" [ref=f6e92]
+          - listitem [ref=f6e95]:
+            - generic [ref=f6e96]:
+              - generic [ref=f6e97]: TXT
+              - generic [ref=f6e98]:
+                - generic [ref=f6e99]: new-hire-notes.txt
+                - generic [ref=f6e100]: 1 KB · 127 words read
+              - button "Remove new-hire-notes.txt" [ref=f6e102]
+        - generic [ref=f6e82]:
+          - button "Read 2 files" [ref=f6e105]
+          - button "Nothing to add" [ref=f6e83]
+  - button "Open Next.js Dev Tools" [ref=f6e58] [cursor=pointer]
+  - alert [ref=f6e62]

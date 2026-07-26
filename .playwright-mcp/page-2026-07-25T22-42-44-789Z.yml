@@ -1,0 +1,59 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e3]:
+    - banner [ref=f3e4]:
+      - link "Frontdesk" [ref=f3e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f3e6]: ✂
+      - generic [ref=f3e17]: Savior Plumbing
+    - generic [ref=f3e8]:
+      - generic [ref=f3e18]:
+        - generic [ref=f3e19]: ✂
+        - paragraph [ref=f3e20]: I'm the specialist who'll get your phone agent set up, and I'll keep it quick. Pick your trade from the cards below to get started — plumbing is the only one live right now.
+      - paragraph [ref=f3e64]: Plumbing
+      - generic [ref=f3e65]:
+        - generic [ref=f3e66]: ✂
+        - paragraph [ref=f3e67]: Plumbing it is. Easiest starting point is your website — I'll read it myself and pull out your services, areas and hours instead of making you type all that out. Drop the address in below, and if you don't have a site there's an option to say so.
+      - paragraph [ref=f3e73]: saviorplumbing.com
+      - generic [ref=f3e82]:
+        - generic [ref=f3e83]: ✂
+        - paragraph [ref=f3e84]: "Read it. Got 7 things off it. Now the more useful part: what would you hand a new employee on their first day? A price list, notes on where you'll travel, an induction sheet."
+      - list [ref=f3e117]:
+        - listitem [ref=f3e118]:
+          - generic "price-list.md" [ref=f3e119]:
+            - generic [ref=f3e120]: MD
+            - generic [ref=f3e121]:
+              - generic [ref=f3e122]: price-list.md
+              - generic [ref=f3e123]: 1 KB
+        - listitem [ref=f3e124]:
+          - generic "new-hire-notes.txt" [ref=f3e125]:
+            - generic [ref=f3e126]: TXT
+            - generic [ref=f3e127]:
+              - generic [ref=f3e128]: new-hire-notes.txt
+              - generic [ref=f3e129]: 1 KB
+      - generic [ref=f3e138]:
+        - generic [ref=f3e139]: ✂
+        - paragraph [ref=f3e140]: That's the standard set covered. Let me see if anything else is worth asking.
+      - generic [ref=f3e141]:
+        - generic [ref=f3e142]: ✂
+        - paragraph [ref=f3e143]: 2 more things I'd want to know.
+      - paragraph [ref=f3e154]: We call back within the hour and charge a $95 call-out fee on top of the hourly rate.
+      - generic [ref=f3e155]:
+        - generic [ref=f3e156]: ✂
+        - paragraph [ref=f3e157]: Can the agent book appointments into a specific time slot, or should it only take details and have someone call back to schedule?
+      - paragraph [ref=f3e165]: Book the appointment directly
+      - generic [ref=f3e166]:
+        - generic [ref=f3e167]: ✂
+        - paragraph [ref=f3e168]: "One last thing, and it's optional: connect your Google Calendar and the agent can offer real open slots and put jobs straight into your diary. You can skip this and do it from the dashboard later."
+      - paragraph [ref=f3e178]: Not right now
+      - generic [ref=f3e179]:
+        - generic [ref=f3e180]: ✂
+        - paragraph [ref=f3e181]: That's you set up. The number below is the one to give customers — calls to it come to your agent. Anything you change on the dashboard, it'll know on the very next call.
+      - generic [ref=f3e182]:
+        - paragraph [ref=f3e183]: Your agent's number
+        - paragraph [ref=f3e184]: (813) 555-0175
+        - paragraph [ref=f3e185]: Give this to customers. It isn't connected to a carrier in this prototype, so it won't actually ring.
+        - link [ref=f3e187] [cursor=pointer]:
+          - /url: /dashboard
+          - button "Go to your dashboard" [ref=f3e188]
+  - button "Open Next.js Dev Tools" [ref=f3e58] [cursor=pointer]
+  - alert [ref=f3e62]
